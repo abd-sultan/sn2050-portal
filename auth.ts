@@ -8,6 +8,9 @@ import { signInSchema } from '@/lib/zod';
 import { AdapterUser } from "next-auth/adapters";
 import { JWT } from "next-auth/jwt";
 
+// For more information on each option (and a full list of options) go to
+// https://next-auth.js.org/configuration/options
+
 declare module "next-auth" {
   interface User extends UserType { }
 }
