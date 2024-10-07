@@ -20,14 +20,14 @@ export async function POST(request: Request) {
 
     console.log('🚀 ~ POST ~ user:', user);
 
-    const response = await sendMail({
+    /* const response = await sendMail({
       email: 'no-reply@senegalvision2050.sn',
       // email: 'senegal2050@demomailtrap.com',
       sendTo: body.email,
       subject: 'Création compte - Senegal Vision 2050',
       text: `You have a new contact form submission with the following details: Name: ${body.name}, Email: ${body.email}, Message: ${body.message}`,
       html: `<h1>Hello ${body.firstName},</h1><p>You have a new contact form submission with the following details:</p><ul><li>Name: ${body.firstName}</li><li>Email: ${body.email}</li><li>Message: ${body.message}</li></ul>`,
-    });
+    }); */
 
     // message: "Merci! Votre demande a bien été enregistrée, nos équipes vous contacteront pour un rendez-vous dans les 48 heures",
     return NextResponse.json({
