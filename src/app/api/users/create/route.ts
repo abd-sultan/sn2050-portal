@@ -7,7 +7,6 @@ export async function POST(request: Request) {
   await connect();
 
   const body = await request.json();
-  console.log('🚀 ~ POST ~ body:', body);
 
   // generate 8 chars password
   body.password = Math.random().toString(36).slice(-8);
@@ -17,8 +16,6 @@ export async function POST(request: Request) {
 
     // save to db
     const user = await User.create(body);
-
-    // console.log('🚀 ~ POST ~ user:', user);
 
     /* const response = await sendMail({
       email: 'no-reply@senegalvision2050.sn',
@@ -36,7 +33,6 @@ export async function POST(request: Request) {
       data: user
     });
   } catch (error) {
-    // console.log('🚀 ~ POST ~ error:', error);
     return NextResponse.json({
       status: 'error',
       message: error
