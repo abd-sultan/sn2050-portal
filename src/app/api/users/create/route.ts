@@ -18,7 +18,7 @@ export async function POST(request: Request) {
     // save to db
     const user = await User.create(body);
 
-    console.log('🚀 ~ POST ~ user:', user);
+    // console.log('🚀 ~ POST ~ user:', user);
 
     /* const response = await sendMail({
       email: 'no-reply@senegalvision2050.sn',
@@ -36,7 +36,7 @@ export async function POST(request: Request) {
       data: user
     });
   } catch (error) {
-    console.log('🚀 ~ POST ~ error:', error);
+    // console.log('🚀 ~ POST ~ error:', error);
     return NextResponse.json({
       status: 'error',
       message: error
