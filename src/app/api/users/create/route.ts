@@ -35,11 +35,19 @@ export async function POST(request: Request) {
     // save to db
     const user = await User.create(payload);
 
-    await sendMail({
-      to: user.email,
-      subject: "Validation Compte ✅",
-      html: await render(WelcomeEmail({ password })),
-    });
+    try {
+      await sendMail({
+        to: user.email,
+        subject: "Validation Compte ✅",
+        html: await render(WelcomeEmail({ password })),
+      });
+    } catch (error) {
+      console.log("🚀 ~ CREATE USER - POST ~ error:", error)
+      return NextResponse.json({
+        status: 'error',
+        message: error
+      });
+    }
 
     // message: "Merci! Votre demande a bien été enregistrée, nos équipes vous contacteront pour un rendez-vous dans les 48 heures",
     return NextResponse.json({

@@ -3,6 +3,9 @@ import React, { useEffect, useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { projects, sectors } from '@/constant/sectors';
 import ProjectDetails from '../components/ProjectDetails';
+import { Button } from '@/components/ui/button';
+import { RiInformation2Fill } from 'react-icons/ri';
+import Link from 'next/link';
 
 const Sectors = () => {
   const [selectedSector, setSelectedSector] = useState<any>(null);
@@ -56,9 +59,20 @@ const Sectors = () => {
     <div className='w-full p-4'>
       {!selectedSector && (
         <div>
-          <h2 className='text-xl font-semibold mb-4 text-center'>
-            Sélectionnez le secteur qui vous intéresse
-          </h2>
+          <div className='flex items-center justify-between mb-4'>
+            <h2 className='w-1/2 text-xs md:text-xl font-semibold md:text-center'>
+              Sélectionnez le secteur qui vous intéresse
+            </h2>
+            <Link
+              href='/portal/infos'
+              className='w-1/2 flex items-center justify-end gap-2'
+            >
+              <RiInformation2Fill className='size-6' />
+              <span className='hidden md:text-md md:block'>
+                Informations Utiles
+              </span>
+            </Link>
+          </div>
           <div className='grid grid-cols-2 md:grid-cols-3 gap-4'>
             {sectors.map((sector) => (
               <button
