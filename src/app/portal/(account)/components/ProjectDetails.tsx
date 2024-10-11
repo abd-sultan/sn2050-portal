@@ -81,18 +81,8 @@ const ProjectDetails = ({ project, onBack }: any) => {
           className='bg-green-600 h-12 w-64 px-4'
         />
       )}
-      {/* <button
-        onClick={openPDF}
-        className='bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition-colors'
-      >
-        Ouvrir le fichier du projet
-      </button> */}
+
       <div className='p-4'>
-        {/* <iframe
-          src={`${pdfUrl}#toolbar=0&navpanes=0&scrollbar=0`}
-          className='w-full h-screen md:h-[600px] border-0'
-          title='PDF Viewer'
-        /> */}
         <PDFViewer pdfUrl={pdfUrl} />
       </div>
     </div>
