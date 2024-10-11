@@ -1,13 +1,23 @@
 import React, { useState } from 'react';
+import dynamic from 'next/dynamic';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import 'react-pdf/dist/esm/Page/TextLayer.css';
 import { pdfjs } from 'react-pdf';
 
 // Utiliser la version installée du worker
-pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.worker.min.mjs`;
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
 // pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.js';
 
 import { Document, Page } from 'react-pdf';
+// Charger le composant PDF de manière dynamique
+/* const Document = dynamic(
+  () => import('react-pdf').then((mod) => mod.Document),
+  { ssr: false }
+);
+const Page = dynamic(() => import('react-pdf').then((mod) => mod.Page), {
+  ssr: false,
+}); */
+
 import { Button } from '@/components/ui/button';
 
 const PDFViewer = ({ pdfUrl }: any) => {
