@@ -38,7 +38,7 @@ export default function Countdown() {
   const strokeDashoffset = circumference * ((5 - countdown) / 5);
 
   return (
-    <div className='absolute bottom-3 right-3 justify-center bg-white'>
+    <div className='absolute bottom-3 right-3 justify-center bg-[#F6F6F6]'>
       <div className='relative size-24'>
         <svg className='w-full h-full' viewBox='0 0 100 100'>
           <circle

@@ -11,20 +11,20 @@ export default middleware((req) => {
   const isPublicRoute = PUBLIC_ROUTES.includes(nextUrl.pathname);
   console.log("🚀 ~ middleware ~ isPublicRoute:", isPublicRoute)
 
-  /* if (isPublicRoute && isAuthenticated)
+  if (isPublicRoute && isAuthenticated)
     return Response.redirect(new URL(DEFAULT_REDIRECT, nextUrl));
 
   if (!isAuthenticated && !isPublicRoute)
-    return Response.redirect(new URL(ROOT, nextUrl)); */
+    return Response.redirect(new URL(ROOT, nextUrl));
 });
 
 export const config = {
   matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
 };
 
-/* 
 
-import { NextResponse } from "next/server";
+
+/* import { NextResponse } from "next/server";
 import { auth } from "auth";
 
 export default auth((req: any) => {
@@ -42,5 +42,4 @@ export default auth((req: any) => {
 export const config = {
   matcher: ["/portal/:path*"],
 };
-
-*/
+ */

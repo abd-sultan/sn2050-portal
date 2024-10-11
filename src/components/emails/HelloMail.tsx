@@ -1,10 +1,16 @@
+import { Button } from '@react-email/button';
+import { Html } from '@react-email/html';
 import * as React from 'react';
-import { Html, Button } from '@react-email/components';
 
 export default function HelloEmail() {
   return (
-    <Html lang='en'>
-      <Button>Click me</Button>
+    <Html>
+      <Button
+        href='https://example.com'
+        style={{ background: '#000', color: '#fff' }}
+      >
+        Hello
+      </Button>
     </Html>
   );
 }

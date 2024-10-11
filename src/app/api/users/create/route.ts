@@ -1,7 +1,10 @@
+import { handleEmailFire as sendMail } from '@/lib/send-mail';
 import connect from "@/lib/db";
-import { sendMail } from "@/lib/send-mail";
 import User from "@/models/user.model";
 import { NextResponse } from "next/server";
+import { render } from '@react-email/render';
+import WelcomeEmail from '@/components/emails/Welcome';
+import bcrypt from 'bcrypt';
 
 export async function POST(request: Request) {
   await connect();
@@ -9,22 +12,34 @@ export async function POST(request: Request) {
   const body = await request.json();
 
   // generate 8 chars password
-  body.password = Math.random().toString(36).slice(-8);
-  body.role = 'USER';
+  const password = Math.random().toString(36).slice(-8);
+  // hashed password
+  // body.password = bcrypt.hashSync(password, 10);
+  // // set default role
+  // body.role = 'USER';
+  // body.status = 'en_attente';
 
   try {
 
-    // save to db
-    const user = await User.create(body);
+    const payload = { ...body, password: bcrypt.hashSync(password, 10), role: 'USER', status: 'valide' };
 
-    /* const response = await sendMail({
-      email: 'no-reply@senegalvision2050.sn',
-      // email: 'senegal2050@demomailtrap.com',
-      sendTo: body.email,
-      subject: 'Création compte - Senegal Vision 2050',
-      text: `You have a new contact form submission with the following details: Name: ${body.name}, Email: ${body.email}, Message: ${body.message}`,
-      html: `<h1>Hello ${body.firstName},</h1><p>You have a new contact form submission with the following details:</p><ul><li>Name: ${body.firstName}</li><li>Email: ${body.email}</li><li>Message: ${body.message}</li></ul>`,
-    }); */
+    // check if user already exists
+    const userExists = await User.findOne({ email: body.email });
+    if (userExists) {
+      return NextResponse.json({
+        status: 'error',
+        message: 'Cet Utilisateur existe déjà!'
+      });
+    }
+
+    // save to db
+    const user = await User.create(payload);
+
+    await sendMail({
+      to: user.email,
+      subject: "Validation Compte ✅",
+      html: await render(WelcomeEmail({ password })),
+    });
 
     // message: "Merci! Votre demande a bien été enregistrée, nos équipes vous contacteront pour un rendez-vous dans les 48 heures",
     return NextResponse.json({

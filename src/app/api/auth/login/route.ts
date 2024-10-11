@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import User from "@/models/user.model";
 import { signIn } from "auth";
+import { getToken } from "next-auth/jwt";
+import connect from "@/lib/db";
 
 /* export async function POST(request: Request) {
   const body = await request.json();
@@ -24,12 +26,16 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
   try {
     const result = await signIn("credentials", { redirect: false, email, password });
+    console.log("🚀 ~ POST ~ result:", result)
 
     // handle the result of the sign-in attempt
     if (!result || result.error) {
       return NextResponse.json({ error: "Invalid credentials" });
     } else {
-      return NextResponse.json({ success: true });
+      connect();
+      const user = await User.findOne({ email });
+      const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
+      return NextResponse.json({ success: true, user, token });
     }
   } catch (error) {
     console.error("Error during sign-in", error);

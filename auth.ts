@@ -32,24 +32,24 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         email: {},
         password: {},
       },
-      authorize: async (credentials) => {
+      authorize: async (credentials: any) => {
         await connect();
         const { email, password } = await signInSchema.parseAsync(credentials)
         try {
           const user: UserType | null = await User.findOne({ email: credentials.email });
           console.log("🚀 ~ authorize: ~ user1:", user)
           if (user) {
-            /* const isPasswordCorrect = await bcrypt.compare(
+            const isPasswordCorrect = await bcrypt.compare(
               credentials.password,
               user.password
-              );
-              if (isPasswordCorrect) {
-                return user;
-                } */
-            if (credentials.password === user.password) {
-              console.log("🚀 ~ authorize: ~ user2:", user)
+            );
+            if (isPasswordCorrect) {
               return user;
             }
+            /* if (credentials.password === user.password) {
+              console.log("🚀 ~ authorize: ~ user2:", user)
+              return user;
+            } */
           }
 
           // Return null if user data could not be retrieved
@@ -71,7 +71,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   callbacks: {
     jwt: async ({ token, user }: { token: JWT; user: UserType }) => {
       if (user) {
-        token.id = user?._id
+        token.subId = user?._id
         token.role = user?.role
         token.company = user?.company
         token.sector = user?.sector
@@ -108,5 +108,32 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       console.log("🚀 ~ session: ~ session, token:", session, token)
       return session
     }
+  },
+  cookies: {
+    sessionToken: {
+      name: `next-auth.session-token`,
+      options: {
+        httpOnly: true, // Rend les cookies non accessibles via JavaScript
+        secure: process.env.NODE_ENV === 'production', // Utilise des cookies sécurisés uniquement en production
+        sameSite: 'strict', // Protection contre CSRF en restreignant les envois intersites
+        path: '/',
+      },
+    },
+    callbackUrl: {
+      name: 'next-auth.callback-url',
+      options: {
+        sameSite: 'lax', // Moins restrictif pour autoriser certaines redirections
+        secure: process.env.NODE_ENV === 'production',
+        path: '/',
+      },
+    },
+    csrfToken: {
+      name: 'next-auth.csrf-token',
+      options: {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        path: '/',
+      },
+    },
   },
 })

@@ -24,9 +24,9 @@ export const metadata: Metadata = {
   // !STARTERCONF this is the default favicon, you can generate your own from https://realfavicongenerator.net/
   // ! copy to /favicon folder
   icons: {
-    icon: '/images/logo-sn2050.png',
-    shortcut: '/images/logo-sn2050.png',
-    apple: '/images/logo-sn2050.png',
+    icon: '/images/logo-sn2050.jpg',
+    shortcut: '/images/logo-sn2050.jpg',
+    apple: '/images/logo-sn2050.jpg',
   },
   manifest: `/favicon/site.webmanifest`,
   openGraph: {
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     title: siteConfig.title,
     description: siteConfig.description,
     siteName: siteConfig.title,
-    images: [`${siteConfig.url}/images/logo-sn2050.png`],
+    images: [`${siteConfig.url}/images/logo-sn2050.jpg`],
     type: 'website',
     locale: 'en_US',
   },
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: siteConfig.title,
     description: siteConfig.description,
-    images: [`${siteConfig.url}/images/logo-sn2050.png`],
+    images: [`${siteConfig.url}/images/logo-sn2050.jpg`],
     // creator: '@th_clarence',
   },
   // authors: [
