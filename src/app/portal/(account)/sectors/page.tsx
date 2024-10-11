@@ -91,7 +91,7 @@ const Sectors = () => {
               </span>
             </Link>
           </div>
-          <div className='grid grid-cols-1 md:grid-cols-3 gap-12 mt-12'>
+          <div className='grid grid-cols-2 md:grid-cols-3 gap-12 mt-12'>
             {sectors.map((sector) => (
               <div
                 key={sector.id}
@@ -101,7 +101,7 @@ const Sectors = () => {
                 <img
                   src={`/resources/projects/${sector.slug}/icon.png`}
                   alt={sector.name}
-                  className='object-fill h-[100%] w-full'
+                  className='object-fill h-12 md:h-[100%] w-full md:w-full'
                   // width={250}
                   // height={250}
                 />
