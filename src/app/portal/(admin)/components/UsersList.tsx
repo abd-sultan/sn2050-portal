@@ -18,6 +18,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { useQuery } from '@tanstack/react-query';
+import { CheckCircle2, CheckSquare2, MailOpen } from 'lucide-react';
+import Link from 'next/link';
+import withReactContent from 'sweetalert2-react-content';
+import Swal from 'sweetalert2';
+
+const MySwal = withReactContent(Swal);
 
 export default function UsersList() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -28,34 +35,51 @@ export default function UsersList() {
   const [selectedUser, setSelectedUser] = useState(null);
 
   // Exemple de données d'utilisateurs
-  const users = [
-    {
-      id: 1,
-      name: 'Alice',
-      email: 'alice@example.com',
-      sector: 'Tech',
-      status: 'Validé',
+  const { data: users, isLoading } = useQuery({
+    queryKey: ['users'],
+    queryFn: async () => {
+      const response = await fetch('/api/users/find');
+      const data = await response.json();
+      console.log('🚀 ~ queryFn: ~ data:', data.users);
+      return data.users;
     },
-    {
-      id: 2,
-      name: 'Bob',
-      email: 'bob@example.com',
-      sector: 'Finance',
-      status: 'En attente',
-    },
-    // ... plus d'utilisateurs
-  ];
+  });
 
-  const filteredUsers = users.filter(
-    (user) =>
+  /* const filteredUsers = users.filter(
+    (user: any) =>
       user.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
       (sector === 'all' || user.sector === sector) &&
       (status === 'all' || user.status === status)
-  );
+  ); */
 
   const handleSendEmail = (user: any) => {
     setSelectedUser(user);
     setShowEmailForm(true);
+  };
+
+  const handleValidate = async (id: any) => {
+    const res = await fetch('/api/users/validate', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ id }),
+    });
+
+    const data = await res.json();
+    console.log('🚀 ~ handleValidate ~ data:', data);
+
+    if (data.status === 'success') {
+      MySwal.fire({
+        title: 'Un mail de validation a été envoyé!',
+        icon: 'success',
+        confirmButtonText: 'Fermer',
+        confirmButtonColor: 'green',
+        customClass: {
+          container: 'bg-flag-green text-white',
+        },
+      });
+    }
   };
 
   return (
@@ -68,7 +92,7 @@ export default function UsersList() {
           onChange={(e) => setSearchTerm(e.target.value)}
           className='md:w-1/3'
         />
-        <Select value={sector} onValueChange={setSector}>
+        {/* <Select value={sector} onValueChange={setSector}>
           <SelectTrigger className='md:w-1/4'>
             <SelectValue placeholder="Secteur d'activité" />
           </SelectTrigger>
@@ -77,7 +101,7 @@ export default function UsersList() {
             <SelectItem value='Tech'>Tech</SelectItem>
             <SelectItem value='Finance'>Finance</SelectItem>
           </SelectContent>
-        </Select>
+        </Select> */}
         <Select value={status} onValueChange={setStatus}>
           <SelectTrigger className='md:w-1/4'>
             <SelectValue placeholder="Statut d'inscription" />
@@ -95,27 +119,60 @@ export default function UsersList() {
             <TableHead className='text-secondary-foreground'>Nom</TableHead>
             <TableHead className='text-secondary-foreground'>Email</TableHead>
             <TableHead className='text-secondary-foreground'>Secteur</TableHead>
+            <TableHead className='text-secondary-foreground'>
+              Organisation
+            </TableHead>
             <TableHead className='text-secondary-foreground'>Statut</TableHead>
-            <TableHead className='text-secondary-foreground'>Action</TableHead>
+            <TableHead className='text-secondary-foreground text-right'>
+              Action
+            </TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {filteredUsers.map((user) => (
-            <TableRow key={user.id}>
-              <TableCell>{user.name}</TableCell>
-              <TableCell>{user.email}</TableCell>
-              <TableCell>{user.sector}</TableCell>
-              <TableCell>{user.status}</TableCell>
-              <TableCell>
-                <Button
-                  onClick={() => handleSendEmail(user)}
-                  variant='secondary'
-                >
-                  Envoyer un email
-                </Button>
+          {users?.length > 0 ? (
+            users.map((user: any) => (
+              <TableRow key={user.id}>
+                <TableCell>
+                  <b>{user.lastName.toString().toUpperCase()}</b>{' '}
+                  {user.firstName}
+                </TableCell>
+                <TableCell>{user.email}</TableCell>
+                <TableCell>{user.sector}</TableCell>
+                <TableCell>{user.company}</TableCell>
+                <TableCell>
+                  {user.status === 'en_attente' ? (
+                    <p className='uppercase text-center font-bold text-amber-600 w-full bg-amber-100 px-4 py-2 rounded-xl'>
+                      En attente
+                    </p>
+                  ) : (
+                    <p className='uppercase text-center font-bold text-emerald-600 w-full bg-emerald-100 px-4 py-2 rounded-xl'>
+                      Vérifié
+                    </p>
+                  )}
+                </TableCell>
+                <TableCell className='text-right flex gap-2 items-center justify-end'>
+                  <Button
+                    onClick={() => handleValidate(user._id)}
+                    variant='link'
+                    className='cursor-pointer'
+                  >
+                    <CheckCircle2 className='text-flag-green' />
+                  </Button>
+                  <Link href={`mailto:${user.email}`}>
+                    <MailOpen className='text-primary' />
+                  </Link>
+                </TableCell>
+              </TableRow>
+            ))
+          ) : (
+            <TableRow>
+              <TableCell colSpan={6} className='text-center'>
+                {isLoading
+                  ? 'Chargement...'
+                  : `Pas d'utilisateur correspondant ${users.length}`}
               </TableCell>
             </TableRow>
-          ))}
+          )}
         </TableBody>
       </Table>
       <div className='flex justify-center space-x-2'>
@@ -128,7 +185,7 @@ export default function UsersList() {
         </Button>
         <Button
           onClick={() => setCurrentPage((prev) => prev + 1)}
-          disabled={filteredUsers.length < 10}
+          disabled={users?.length < 10}
           variant='outline'
         >
           Suivant

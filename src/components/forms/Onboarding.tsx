@@ -16,6 +16,7 @@ import {
 import { Input } from '@/components/ui/input';
 import React from 'react';
 import Link from 'next/link';
+import { Loader2 } from 'lucide-react';
 
 const formSchema = z.object({
   firstName: z.string().min(2, {
@@ -34,6 +35,7 @@ const formSchema = z.object({
 
 export default function OnboardingForm({ handleFormState }: any) {
   const [formState, setFormState] = React.useState<any>(null);
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -48,6 +50,7 @@ export default function OnboardingForm({ handleFormState }: any) {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    setIsLoading(true);
     console.log(values);
 
     const res = await fetch('/api/users/create', {
@@ -60,10 +63,14 @@ export default function OnboardingForm({ handleFormState }: any) {
     console.log('🚀 ~ onSubmit ~ res:', res);
 
     if (res.ok) {
-      form.reset();
+      setIsLoading(false);
+      // form.reset();
     }
     const data = await res.json();
     console.log('🚀 ~ onSubmit ~ res ~ body:', data);
+    if (data.status === 'success') {
+      form.reset();
+    }
     setFormState(data);
     handleFormState(data);
   }
@@ -71,7 +78,7 @@ export default function OnboardingForm({ handleFormState }: any) {
   return (
     <>
       <Form {...form}>
-        {!formState && (
+        {(!formState || formState.status !== 'success') && (
           <form
             onSubmit={form.handleSubmit(onSubmit)}
             className='w-full md:w-1/2 p-12 space-y-8'
@@ -144,7 +151,7 @@ export default function OnboardingForm({ handleFormState }: any) {
                 name='sector'
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Type de structure</FormLabel>
+                    <FormLabel>Fonction</FormLabel>
                     <FormControl>
                       <Input {...field} />
                     </FormControl>
@@ -170,8 +177,19 @@ export default function OnboardingForm({ handleFormState }: any) {
               />
             </div>
             <div className='flex flex-col flex-1 gap-1 items-center justify-center'>
-              <Button size='lg' type='submit' className='w-full md:w-auto'>
-                Enregistrer
+              <Button
+                disabled={isLoading}
+                size='lg'
+                type='submit'
+                className='w-full md:w-auto disabled:opacity-50 disabled:cursor-not-allowed'
+              >
+                {isLoading && (
+                  <Loader2
+                    className='mr-2 h-4 w-4 animate-spin'
+                    aria-label='Loader'
+                  />
+                )}
+                {isLoading ? 'Enregistrement en cours...' : 'Enregistrer'}
               </Button>
               <div className='flex items-center justify-center'>
                 <p className='font-serif text-xs'>OU</p>

@@ -3,36 +3,19 @@
 import React, { useEffect, useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { projects, sectors } from '@/constant/sectors';
-
-const ProjectDetails = ({ project, onBack }: any) => {
-  const openPDF = () => {
-    // Assurez-vous que l'URL du PDF est correcte
-    window.open('/resources/project.pdf', '_blank');
-  };
-
-  return (
-    <div className='bg-white p-4 rounded-lg shadow'>
-      <button
-        onClick={onBack}
-        className='mb-4 text-green-700 flex items-center'
-      >
-        <ChevronLeft size={20} />
-        Retour
-      </button>
-      <h3 className='text-xl font-bold mb-2'>{project.name}</h3>
-      <button
-        onClick={openPDF}
-        className='bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition-colors'
-      >
-        Ouvrir le fichier du projet
-      </button>
-    </div>
-  );
-};
+import ProjectDetails from '@/app/portal/(account)/components/ProjectDetails';
+import { useSession } from 'next-auth/react';
+import { redirect } from 'next/navigation';
+import { getConnectedUser } from '@/lib/utils';
 
 const App = () => {
   const [selectedSector, setSelectedSector] = useState<any>(null);
   const [selectedProject, setSelectedProject] = useState(null);
+  const user = getConnectedUser();
+
+  /* if (!user) {
+    redirect('/signin');
+  } */
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);

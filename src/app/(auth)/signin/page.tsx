@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -12,11 +12,13 @@ import {
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { signIn } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { Loader2 } from 'lucide-react';
 
 export default function LoginForm() {
   const [formData, setFormData] = React.useState<any>({});
+  const [isLoading, setIsLoading] = React.useState(false);
   const [authenticated, setAuthenticated] = React.useState(false);
   const [error, setError] = React.useState<any | null>(null);
   const router = useRouter();
@@ -26,6 +28,7 @@ export default function LoginForm() {
   const [tokenStatus, setTokenStatus] = React.useState(false);
 
   React.useEffect(() => {
+    console.log('🚀 ~ useEffect:', tokenStatus, authSuccess);
     // check query string for authentication code
     if (authSuccess || tokenStatus) {
       const url = window.location.href;
@@ -37,9 +40,15 @@ export default function LoginForm() {
           router.push('/signin');
         }
       } else if (tokenStatus) {
+        console.log(
+          '🚀 ~ React.useEffect ~ authSuccess:',
+          tokenStatus,
+          authSuccess
+        );
         // Redirect to previous page or home page
-        const next = searchParams.get('next') || '/portal';
-        router.push(next);
+        // const next = searchParams.get('next') || '/portal';
+        // Redirection après une connexion réussie
+        router.push('/portal/sectors');
       } else {
         router.push('/signin');
       }
@@ -47,6 +56,8 @@ export default function LoginForm() {
   }, [tokenStatus, authSuccess]);
   const credentialsAction = async () => {
     console.log('🚀 ~ credentialsAction ~ formData:', formData);
+
+    setIsLoading(true);
     try {
       const res = await fetch('/api/auth/login', {
         method: 'POST',
@@ -56,24 +67,41 @@ export default function LoginForm() {
         body: JSON.stringify(formData),
       });
 
-      console.log('🚀 ~ credentialsAction ~ res:', res);
-      if (res.ok) {
+      const data = await res.json();
+      console.log('🚀 ~ credentialsAction ~ res:', data);
+      if (res.ok || data?.success) {
+        console.log('🚀 ~ res.ok || data?.success:', res);
+        localStorage.setItem('token', btoa(JSON.stringify(data?.user)));
         setTokenStatus(true);
+        setAuthSuccess(true);
+        setIsLoading(false);
       } else {
         // handle error state here
         setAuthSuccess(false);
+        setIsLoading(false);
+        setError(data?.message);
       }
     } catch (error) {
       console.log('🚀 ~ credentialsAction ~ error:', error);
+      setError('Email ou mot de passe incorrect');
       // handle error state here
       setAuthSuccess(false);
+      setIsLoading(false);
     }
   };
+
+  // Exécuter lors de la connexion
+  /* useEffect(() => {
+    if (status === 'authenticated' && session) {
+      // Redirige selon le rôle de l'utilisateur
+      router.push('/portal/sectors');
+    }
+  }, [status, session]); */
 
   return (
     <form
       action={credentialsAction}
-      className='w-full h-screen flex items-center justify-center'
+      className='w-full h-screen flex items-center justify-center bg-[#F6F6F6]'
     >
       <Card className='w-full max-w-sm'>
         <CardHeader>
@@ -112,8 +140,19 @@ export default function LoginForm() {
           </div>
         </CardContent>
         <CardFooter>
-          <Button type='submit' variant='default' className='w-full'>
-            Se Connecter
+          <Button
+            disabled={isLoading}
+            type='submit'
+            variant='default'
+            className='w-full  disabled:opacity-50 disabled:cursor-not-allowed'
+          >
+            {isLoading && (
+              <Loader2
+                className='mr-2 h-4 w-4 animate-spin'
+                aria-label='Loader'
+              />
+            )}
+            {isLoading ? 'Connexion en cours...' : 'Se Connecter'}
           </Button>
         </CardFooter>
       </Card>

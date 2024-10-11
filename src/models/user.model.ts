@@ -10,6 +10,7 @@ interface IUser extends Document {
   sector: string;
   company: string;
   role: string;
+  status: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -47,6 +48,10 @@ const userSchema: Schema<IUser> = new Schema(
       required: true,
     },
     role: {
+      type: String,
+      required: true,
+    },
+    status: {
       type: String,
       required: true,
     },

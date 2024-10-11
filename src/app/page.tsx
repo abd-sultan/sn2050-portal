@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import '@/lib/env';
-import LogoApp from '~/images/logo-sn2050.png';
+import LogoApp from '~/images/logo-sn2050.jpg';
 import LogoApix from '~/images/logo-apix.png';
 import Logo from '~/svg/LogoApix.svg';
 import Image from 'next/image';
@@ -14,8 +14,8 @@ import Countdown from '@/components/Countdown';
 
 export default function HomePage() {
   return (
-    <main className='flex min-h-screen overflow-hidden flex-col items-center justify-center bg-white gap-12'>
-      <Image src={LogoApp} alt='logo' />
+    <main className='flex min-h-screen overflow-hidden flex-col items-center justify-center bg-[#F6F6F6] gap-12'>
+      <Image width={500} height={500} src={LogoApp} alt='logo' />
       <p className='text-center text-xl md:text-4xl font-bold'>
         Bienvenue sur le portefeuille de projets Sénégal 2050
       </p>
