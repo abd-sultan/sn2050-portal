@@ -20,7 +20,7 @@ const Page = dynamic(() => import('react-pdf').then((mod) => mod.Page), {
 
 import { Button } from '@/components/ui/button';
 
-const PDFViewer = ({ pdfUrl }: any) => {
+const PDFViewer = ({ pdfUrl, scale = null }: any) => {
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
   const [width, setWidth] = useState<number>(window.innerWidth);
@@ -40,7 +40,7 @@ const PDFViewer = ({ pdfUrl }: any) => {
   };
 
   return (
-    <div className='w-full flex flex-col items-center justify-center z-40 max-w-full mx-auto pb-4 px-4 bg-white rounded-lg shadow-lg'>
+    <div className='w-full flex flex-col items-center justify-center z-40 max-w-full mx-auto pb-4 px-4 bg-transparent rounded-lg shadow-lg'>
       <Document
         file={pdfUrl}
         onLoadSuccess={onDocumentLoadSuccess}
@@ -53,7 +53,7 @@ const PDFViewer = ({ pdfUrl }: any) => {
           pageNumber={pageNumber}
           renderTextLayer={true}
           renderAnnotationLayer={true}
-          scale={calculateScale()}
+          scale={scale || calculateScale()}
           className='mb-4 w-full max-w-full flex items-center justify-center'
         />
       </Document>
