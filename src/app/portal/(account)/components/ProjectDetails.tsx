@@ -1,21 +1,21 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { ChevronLeft, Contact2, Mailbox } from 'lucide-react';
 import FabButton from '@/components/buttons/FabButton';
 import PDFViewer from '@/app/portal/(account)/components/PDFViewer';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
-import { useSession } from 'next-auth/react';
 import { getConnectedUser } from '@/lib/utils';
 
 const MySwal = withReactContent(Swal);
 
 const ProjectDetails = ({ project, onBack }: any) => {
   const pdfUrl = '/resources/project.pdf';
-  const user = getConnectedUser();
+  const [user, setUser] = useState<any>(getConnectedUser());
 
   const handleAddToFavorites = async () => {
+    // const user = getConnectedUser();
     console.log('🚀 ~ handleAddToFavorites ~ user:', user);
     try {
       const res = await fetch('/api/projects/favs', {

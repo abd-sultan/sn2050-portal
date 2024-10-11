@@ -3,15 +3,12 @@
 import React, { useEffect, useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { projects, sectors } from '@/constant/sectors';
-import ProjectDetails from '@/app/portal/(account)/components/ProjectDetails';
-import { useSession } from 'next-auth/react';
-import { redirect } from 'next/navigation';
-import { getConnectedUser } from '@/lib/utils';
+import ProjectDetails from '../components/ProjectDetails';
 
-const App = () => {
+const Sectors = () => {
   const [selectedSector, setSelectedSector] = useState<any>(null);
   const [selectedProject, setSelectedProject] = useState(null);
-  const user = getConnectedUser();
+  // const user = getConnectedUser();
 
   /* if (!user) {
     redirect('/signin');
@@ -121,4 +118,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default Sectors;
