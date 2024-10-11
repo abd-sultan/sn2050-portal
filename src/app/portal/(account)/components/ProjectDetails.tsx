@@ -10,8 +10,11 @@ import { getConnectedUser } from '@/lib/utils';
 
 const MySwal = withReactContent(Swal);
 
-const ProjectDetails = ({ project, onBack }: any) => {
-  const pdfUrl = '/resources/project.pdf';
+const ProjectDetails = ({ project, sector, onBack }: any) => {
+  const params = new URLSearchParams(window.location.search);
+  const filename = params.get('fn');
+  const pdfUrl = `/resources/projects/${sector.slug}/${filename}.pdf`;
+  console.log('🚀 ~ ProjectDetails ~ pdfUrl:', pdfUrl);
   const [user, setUser] = useState<any>(getConnectedUser());
 
   const handleAddToFavorites = async () => {
@@ -69,7 +72,7 @@ const ProjectDetails = ({ project, onBack }: any) => {
         <ChevronLeft size={20} />
         Retour
       </button>
-      <h3 className='text-xl font-bold mb-2'>{project.name}</h3>
+      {/* <h3 className='text-xl font-bold mb-2'>{project.name}</h3> */}
       {user.role === 'USER' && (
         <FabButton
           onClick={handleAddToFavorites}
@@ -82,7 +85,7 @@ const ProjectDetails = ({ project, onBack }: any) => {
         />
       )}
 
-      <div className='p-4'>
+      <div className=''>
         <PDFViewer pdfUrl={pdfUrl} />
       </div>
     </div>

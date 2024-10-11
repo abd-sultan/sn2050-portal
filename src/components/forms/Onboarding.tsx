@@ -17,6 +17,13 @@ import { Input } from '@/components/ui/input';
 import React from 'react';
 import Link from 'next/link';
 import { Loader2 } from 'lucide-react';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
 const formSchema = z.object({
   firstName: z.string().min(2, {
@@ -31,6 +38,7 @@ const formSchema = z.object({
     .min(9, { message: 'Ce champ doit contenir au moins 10 caractères.' }),
   sector: z.string(),
   company: z.string(),
+  fonction: z.string(),
 });
 
 export default function OnboardingForm({ handleFormState }: any) {
@@ -151,13 +159,28 @@ export default function OnboardingForm({ handleFormState }: any) {
                 name='sector'
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Fonction</FormLabel>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
-                    <FormDescription>
-                      Type: PTFs, Gouvernement, Secteur privé, banques, etc.
-                    </FormDescription>
+                    <FormLabel>Type de structure</FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder='Choisissez votre type de structure' />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value='PTFs'>PTFs</SelectItem>
+                        <SelectItem value='Gouvernement'>
+                          Gouvernement
+                        </SelectItem>
+                        <SelectItem value='Secteur Privé'>
+                          Secteur Privé
+                        </SelectItem>
+                        <SelectItem value='Banques'>Banques</SelectItem>
+                        <SelectItem value='Autres'>Autres</SelectItem>
+                      </SelectContent>
+                    </Select>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -169,8 +192,31 @@ export default function OnboardingForm({ handleFormState }: any) {
                   <FormItem>
                     <FormLabel>Nom de la structure</FormLabel>
                     <FormControl>
-                      <Input {...field} />
+                      <Input
+                        placeholder='Nom de votre structure/organisation'
+                        {...field}
+                      />
                     </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              {/*  */}
+              <FormField
+                control={form.control}
+                name='fonction'
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Fonction</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder='Type: DG, PCA, Agent, etc.'
+                        {...field}
+                      />
+                    </FormControl>
+                    {/* <FormDescription>
+                      Type: DG, PCA, Agent, etc.
+                    </FormDescription> */}
                     <FormMessage />
                   </FormItem>
                 )}
