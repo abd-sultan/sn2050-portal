@@ -33,7 +33,7 @@ const PropDefaults: WelcomeEmailProps = {
       Description: (
         <li className='mb-20' key={1}>
           <strong>Connectez-vous</strong>{' '}
-          <Link href={`${baseUrl}/signgin`}>Connectez-vous</Link> à votre espace
+          <Link href={`${baseUrl}/signin`}>Connectez-vous</Link> à votre espace
           avec les accés email et mot de passe fournis (à la fin de ce mail).
         </li>
       ),
@@ -110,7 +110,7 @@ export const WelcomeEmail = ({ password }: any) => {
             <Section>
               <Row>
                 <Text className='text-base'>
-                  Félicitation! Votre compte a été validé ce qui vous donne
+                  Félicitations! Votre compte a été validé ce qui vous donne
                   accès à tous les projets dans différents secteurs d'activité.
                 </Text>
 

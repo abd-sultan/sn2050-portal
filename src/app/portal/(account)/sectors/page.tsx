@@ -6,10 +6,13 @@ import ProjectDetails from '../components/ProjectDetails';
 import { Button } from '@/components/ui/button';
 import { RiInformation2Fill } from 'react-icons/ri';
 import Link from 'next/link';
+import Image from 'next/image';
+import { Input } from '@/components/ui/input';
 
 const Sectors = () => {
   const [selectedSector, setSelectedSector] = useState<any>(null);
   const [selectedProject, setSelectedProject] = useState(null);
+  const [filteredProject, setFilteredProject] = useState([]);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -19,6 +22,7 @@ const Sectors = () => {
     if (sectorId) {
       const sector = sectors.find((s) => s.id === sectorId);
       setSelectedSector(sector);
+      setFilteredProject(projects[sector?.id]);
 
       if (projectId) {
         const project = projects[sectorId].find((p: any) => p.id === projectId);
@@ -27,32 +31,46 @@ const Sectors = () => {
     }
   }, []);
 
-  const updateURL = (sector: any, project: any) => {
+  const updateURL = (sector: any, project: any, filename: any) => {
     const params = new URLSearchParams();
     if (sector) params.set('sector', sector.id);
     if (project) params.set('project', project.id);
+    if (filename) params.set('fn', filename);
+    setFilteredProject(projects[sector?.id]);
     window.history.pushState({}, '', `${window.location.pathname}?${params}`);
   };
 
   const handleSectorClick = (sector: any) => {
     setSelectedSector(sector);
     setSelectedProject(null);
-    updateURL(sector, null);
+    // setFilteredProject([]);
+    updateURL(sector, null, null);
   };
 
-  const handleProjectClick = (project: any) => {
+  const handleProjectClick = (project: any, index: number) => {
     setSelectedProject(project);
-    updateURL(selectedSector, project);
+    updateURL(selectedSector, project, index);
   };
 
   const handleBack = () => {
     if (selectedProject) {
       setSelectedProject(null);
-      updateURL(selectedSector, null);
+      setFilteredProject([]);
+      updateURL(selectedSector, null, null);
     } else {
       setSelectedSector(null);
-      updateURL(null, null);
+      setFilteredProject([]);
+      updateURL(null, null, null);
     }
+  };
+
+  const handleSearch = (e: any) => {
+    e.preventDefault();
+    const search = e.target?.value;
+    const list = projects[selectedSector.id].filter((p: any) =>
+      p.name.toLowerCase().includes(search.toLowerCase())
+    );
+    setFilteredProject(list);
   };
 
   return (
@@ -73,18 +91,21 @@ const Sectors = () => {
               </span>
             </Link>
           </div>
-          <div className='grid grid-cols-2 md:grid-cols-3 gap-4'>
+          <div className='grid grid-cols-1 md:grid-cols-3 gap-12 mt-12'>
             {sectors.map((sector) => (
-              <button
+              <div
                 key={sector.id}
                 onClick={() => handleSectorClick(sector)}
-                className='bg-white p-4 rounded-lg shadow hover:shadow-md transition-shadow flex flex-col items-center'
+                className='flex flex-col items-center cursor-pointer'
               >
-                <span className='text-4xl mb-2'>{sector.icon}</span>
-                <span className='text-sm font-medium text-center'>
-                  {sector.name}
-                </span>
-              </button>
+                <img
+                  src={`/resources/projects/${sector.slug}/icon.png`}
+                  alt={sector.name}
+                  className='object-fill h-[100%] w-full'
+                  // width={250}
+                  // height={250}
+                />
+              </div>
             ))}
           </div>
         </div>
@@ -92,35 +113,56 @@ const Sectors = () => {
 
       {selectedSector && !selectedProject && (
         <div>
-          <button
-            onClick={handleBack}
-            className='mb-4 text-green-700 flex items-center'
-          >
-            <ChevronLeft size={20} />
-            Retour aux secteurs
-          </button>
-          <h2 className='text-xl font-semibold mb-4'>
+          <div className='flex items-center justify-between mb-4'>
+            <button
+              onClick={handleBack}
+              className='text-green-700 flex items-center'
+            >
+              <ChevronLeft size={20} />
+              Retour aux secteurs
+            </button>
+            <img
+              src={`/resources/projects/${selectedSector.slug}/icon.png`}
+              alt={selectedSector.name}
+              className='h-12 w-32'
+              // width={250}
+              // height={250}
+            />
+          </div>
+          {/* <h2 className='text-xl font-semibold mb-4'>
             {selectedSector.id === 'other'
               ? 'Autres projets'
               : `Projets en ${selectedSector.name}`}
-          </h2>
+          </h2> */}
+          <div className='flex items-center justify-between mb-4'>
+            <Input
+              placeholder='Rechercher un projet'
+              type='text'
+              onChange={(e) => handleSearch(e)}
+            />
+          </div>
           <div className='space-y-2 md:grid md:grid-cols-2 items-center justify-center gap-4'>
-            {projects[selectedSector.id].map((project: any) => (
-              <button
-                key={project.id}
-                onClick={() => handleProjectClick(project)}
-                className='w-full bg-slate-50 p-4 rounded-lg shadow hover:shadow-md transition-shadow text-left flex justify-between items-center'
-              >
-                <span>{project.name}</span>
-                <ChevronRight size={20} className='text-green-700' />
-              </button>
-            ))}
+            {filteredProject?.length > 0 &&
+              filteredProject.map((project: any, index: number) => (
+                <button
+                  key={project.id}
+                  onClick={() => handleProjectClick(project, index + 1)}
+                  className='w-full bg-slate-50 p-4 rounded-lg shadow hover:shadow-md transition-shadow text-left flex justify-between items-center'
+                >
+                  <span>{project.name}</span>
+                  <ChevronRight size={20} className='text-green-700' />
+                </button>
+              ))}
           </div>
         </div>
       )}
 
       {selectedProject && (
-        <ProjectDetails project={selectedProject} onBack={handleBack} />
+        <ProjectDetails
+          project={selectedProject}
+          sector={selectedSector}
+          onBack={handleBack}
+        />
       )}
     </div>
   );

@@ -8,6 +8,7 @@ interface IUser extends Document {
   lastName: string;
   phone: string;
   sector: string;
+  fonction: string;
   company: string;
   role: string;
   status: string;
@@ -55,6 +56,10 @@ const userSchema: Schema<IUser> = new Schema(
       type: String,
       required: true,
     },
+    fonction: {
+      type: String,
+      required: true,
+    }
   },
   { timestamps: true }
 );

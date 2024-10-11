@@ -8,6 +8,14 @@ import { RiArrowLeftCircleFill, RiArrowLeftCircleLine } from 'react-icons/ri';
 
 const infos = [
   {
+    title: "GUIDE DU CREATEUR D'ENTREPRISE",
+    content: '/resources/GUIDE.pdf',
+  },
+  {
+    title: 'Portefeuille PPP - Situation des Projets P1 - Septembre 2024',
+    content: '/resources/PPP_092024.pdf',
+  },
+  {
     title: 'Présentation ZES',
     content: '/resources/ZES.pdf',
   },
