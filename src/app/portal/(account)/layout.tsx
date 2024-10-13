@@ -109,7 +109,9 @@ export default async function RootLayout({
                 )}
               </div>
             </div>
-            <Image src={LogoApp} alt='onboarding' />
+            <Link href='/portal/sectors'>
+              <Image src={LogoApp} alt='onboarding' />
+            </Link>
           </div>
           {children}
         </main>

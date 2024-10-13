@@ -3,5 +3,5 @@ export const siteConfig = {
   description:
     'Vision 2050 pour un Sénégal',
   /** Without additional '/' on the end, e.g. https://theodorusclarence.com */
-  url: 'http://localhost:3000',
+  url: process.env.APP_URL || 'https://projet.senegalvision2050.sn',
 };

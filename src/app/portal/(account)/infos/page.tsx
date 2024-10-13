@@ -3,17 +3,14 @@
 import PDFViewer from '@/app/portal/(account)/components/PDFViewer';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
-import React from 'react';
+import { useSearchParams } from 'next/navigation';
+import React, { useState } from 'react';
 import { RiArrowLeftCircleFill, RiArrowLeftCircleLine } from 'react-icons/ri';
 
 const infos = [
   {
     title: "GUIDE DU CREATEUR D'ENTREPRISE",
     content: '/resources/GUIDE.pdf',
-  },
-  {
-    title: 'Portefeuille PPP - Situation des Projets P1 - Septembre 2024',
-    content: '/resources/PPP_092024.pdf',
   },
   {
     title: 'Présentation ZES',
@@ -40,8 +37,42 @@ const infos = [
   },
 ];
 
+const ppp = {
+  title: 'Portefeuille PPP - Situation des Projets P1 - Septembre 2024',
+  content: '/resources/PPP_092024.pdf',
+};
+
 export default function InfosPage() {
+  const [width, setWidth] = useState<number>(window.innerWidth);
   const [selectedInfo, setSelectedInfo] = React.useState<any>(null);
+  const params = useSearchParams();
+  const sector = params.get('sector');
+
+  // Adapter la taille de la page PDF en fonction de la largeur de la fenêtre
+  const calculateScale = () => {
+    if (width > 768) {
+      return 0.8; // Taille normale pour les grands écrans
+    } else {
+      return width / 1500; // Adapter pour les mobiles
+    }
+  };
+
+  if (sector === 'PPP') {
+    return (
+      <div className='flex flex-col w-full gap-12 px-12 bg-[#F6F6F6]'>
+        <div>
+          <Link
+            href='/portal/sectors'
+            className='border border-gray-800 px-2 py-1 rounded-md cursor-pointer text-sm'
+          >
+            <RiArrowLeftCircleLine className='inline size-4' /> Retour
+          </Link>
+        </div>
+        <PDFViewer pdfUrl={ppp.content} scale={calculateScale()} />
+      </div>
+    );
+  }
+
   return (
     <div className='flex flex-col w-full min-h-screen h-screen px-12 bg-[#F6F6F6]'>
       <h3 className='text-2xl text-primary font-semibold font-jamjuree'>
