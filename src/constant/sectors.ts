@@ -94,7 +94,8 @@ export const projects: any = {
     { id: "416", name: "Protection côtière et développement touristique" }
   ],
   "5": [ // Énergie
-    { id: "521", name: "Projet de Restauration, Protection et Gestion durable des forêts classées de Mbao et Sébikhotane pour une adaptation aux changements climatiques" }
+    { id: "521", name: "Projet de Restauration, Protection et Gestion durable des forêts classées de Mbao et Sébikhotane pour une adaptation aux changements climatiques" },
+    { id: "522", name: "Construction de la première usine d'engrais azotés au Sénégal" }
   ],
   "6": [ // Économie Numérique
     { id: "626", name: "Projet de construction de centrales solaires photovoltaïques avec système de stockage" },

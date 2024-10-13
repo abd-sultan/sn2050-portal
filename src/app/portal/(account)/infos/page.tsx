@@ -4,7 +4,7 @@ import PDFViewer from '@/app/portal/(account)/components/PDFViewer';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { RiArrowLeftCircleFill, RiArrowLeftCircleLine } from 'react-icons/ri';
 
 const infos = [
@@ -37,14 +37,25 @@ const infos = [
   },
 ];
 
-const ppp = {
-  title: 'Portefeuille PPP - Situation des Projets P1 - Septembre 2024',
-  content: '/resources/PPP_092024.pdf',
-};
+const ppp = [
+  {
+    title: 'Portefeuille PPP - Situation des Projets P1 - Septembre 2024',
+    content: '/resources/ppp/PPP_092024.pdf',
+  },
+  {
+    title: 'Senegal: The new technology deal',
+    content: '/resources/ppp/SN-new-deal.pdf',
+  },
+  {
+    title: 'PARC DES TECHNOLOGIES NUMÉRIQUES DU SÉNÉGAL A DIAMNIADIO',
+    content: '/resources/ppp/PTN-SND2050.pdf',
+  },
+];
 
 export default function InfosPage() {
   const [width, setWidth] = useState<number>(window.innerWidth);
   const [selectedInfo, setSelectedInfo] = React.useState<any>(null);
+  const [infosList, setInfosList] = React.useState<any[]>([]);
   const params = useSearchParams();
   const sector = params.get('sector');
 
@@ -57,7 +68,15 @@ export default function InfosPage() {
     }
   };
 
-  if (sector === 'PPP') {
+  useEffect(() => {
+    if (sector === 'PPP') {
+      setInfosList(ppp);
+    } else {
+      setInfosList(infos);
+    }
+  }, [sector]);
+
+  /* if (sector === 'PPP') {
     return (
       <div className='flex flex-col w-full gap-12 px-12 bg-[#F6F6F6]'>
         <div>
@@ -71,7 +90,7 @@ export default function InfosPage() {
         <PDFViewer pdfUrl={ppp.content} scale={calculateScale()} />
       </div>
     );
-  }
+  } */
 
   return (
     <div className='flex flex-col w-full min-h-screen h-screen px-12 bg-[#F6F6F6]'>
@@ -82,12 +101,12 @@ export default function InfosPage() {
         >
           <RiArrowLeftCircleLine className='inline size-4' /> Retour
         </Link>{' '}
-        Informations Utiles
+        {sector === 'PPP' ? 'Portefeuille PPP' : 'Informations APIX'}
       </h3>
       <hr className='my-6' />
       <div className='flex flex-col w-full h-full'>
         <div className='flex flex-col gap-2 w-full z-40'>
-          {infos.map((item, index) => (
+          {infosList.map((item, index) => (
             <p
               key={index}
               onClick={() => setSelectedInfo(item)}
@@ -103,7 +122,12 @@ export default function InfosPage() {
           ))}
         </div>
         <div className='flex w-full items-center justify-center'>
-          {selectedInfo && <PDFViewer pdfUrl={selectedInfo.content} />}
+          {selectedInfo && (
+            <PDFViewer
+              pdfUrl={selectedInfo.content}
+              scale={sector === 'PPP' ? calculateScale() : null}
+            />
+          )}
         </div>
       </div>
     </div>
