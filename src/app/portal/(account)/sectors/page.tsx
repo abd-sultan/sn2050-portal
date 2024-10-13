@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { RiInformation2Fill } from 'react-icons/ri';
 import Link from 'next/link';
 import Image from 'next/image';
+import LogoApix from '~/images/logo-apix.png';
 import { Input } from '@/components/ui/input';
 
 const Sectors = () => {
@@ -77,19 +78,10 @@ const Sectors = () => {
     <div className='w-full p-4'>
       {!selectedSector && (
         <div>
-          <div className='flex items-center justify-between mb-4'>
-            <h2 className='w-1/2 text-xs md:text-xl font-semibold md:text-center'>
+          <div className='flex items-center justify-center mb-4'>
+            <h2 className='w-full text-xs md:text-xl font-semibold md:text-center'>
               Sélectionnez le secteur qui vous intéresse
             </h2>
-            <Link
-              href='/portal/infos'
-              className='w-1/2 flex items-center justify-end gap-2'
-            >
-              <RiInformation2Fill className='size-6' />
-              <span className='hidden md:text-md md:block'>
-                Informations Utiles
-              </span>
-            </Link>
           </div>
           <div className='grid grid-cols-2 md:grid-cols-3 gap-12 mt-12'>
             {sectors.map((sector) => (
@@ -107,6 +99,26 @@ const Sectors = () => {
                 />
               </div>
             ))}
+            <div>
+              <Link href='/portal/infos?sector=PPP' className='w-full'>
+                <Button className='w-full h-12 md:h-20 rounded-xl rounded-tr-[1.7rem] rounded-bl-[1.7rem] md:rounded-tr-[2.5rem] md:rounded-bl-[3rem] bg-flag-red'>
+                  PPP
+                </Button>
+              </Link>
+            </div>
+            <div>
+              <Link href='/portal/infos' className='w-full'>
+                <Button className='w-full bg-white h-12 md:h-20 rounded-xl rounded-tr-[1.7rem] rounded-bl-[1.7rem] md:rounded-tr-[2.5rem] md:rounded-bl-[3rem]'>
+                  <Image
+                    src={LogoApix}
+                    alt='logo'
+                    width={64}
+                    height={64}
+                    className='object-contain'
+                  />
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
       )}
