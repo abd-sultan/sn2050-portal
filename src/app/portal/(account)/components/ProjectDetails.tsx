@@ -78,7 +78,7 @@ const ProjectDetails = ({ project, sector, onBack }: any) => {
           onClick={handleAddToFavorites}
           children={
             <p className='flex items-center justify-centertext-white font-urbanist text-center'>
-              J’aimerai en savoir plus sur ce projet
+              J’aimerais en savoir plus sur ce projet
             </p>
           }
           className='bg-green-600 h-12 w-64 px-4'
