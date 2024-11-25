@@ -10,10 +10,11 @@ import { getConnectedUser } from '@/lib/utils';
 
 const MySwal = withReactContent(Swal);
 
-const ProjectDetails = ({ project, sector, onBack }: any) => {
+const ProjectDetails = ({ project, sector, onBack, lang }: any) => {
   const params = new URLSearchParams(window.location.search);
   const filename = params.get('fn');
-  const pdfUrl = `/resources/projects/${sector.slug}/${filename}.pdf`;
+  const folder = lang.code === 'en' ? 'projects_en' : 'projects';
+  const pdfUrl = `/resources/${folder}/${sector.slug}/${filename}.pdf`;
   console.log('🚀 ~ ProjectDetails ~ pdfUrl:', pdfUrl);
   const [user, setUser] = useState<any>(getConnectedUser());
 

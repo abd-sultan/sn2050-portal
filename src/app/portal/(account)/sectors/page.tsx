@@ -1,7 +1,7 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { projects, sectors } from '@/constant/sectors';
+import { projects, en_projects, sectors } from '@/constant/sectors';
 import ProjectDetails from '../components/ProjectDetails';
 import { Button } from '@/components/ui/button';
 import { RiInformation2Fill } from 'react-icons/ri';
@@ -14,6 +14,18 @@ const Sectors = () => {
   const [selectedSector, setSelectedSector] = useState<any>(null);
   const [selectedProject, setSelectedProject] = useState(null);
   const [filteredProject, setFilteredProject] = useState([]);
+  const [lang, setLang] = useState({ name: 'Anglais', code: 'en' });
+  const [currentProject, setCurrentProject] = useState(projects);
+
+  const handleLangChange = () => {
+    if (lang.code === 'fr') {
+      setCurrentProject(en_projects);
+      setLang({ name: 'Anglais', code: 'en' });
+    } else {
+      setCurrentProject(projects);
+      setLang({ name: 'Français', code: 'fr' });
+    }
+  };
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -21,23 +33,37 @@ const Sectors = () => {
     const projectId = params.get('project');
 
     if (sectorId) {
-      const sector = sectors.find((s) => s.id === sectorId);
+      const sector: any = sectors.find((s) => s.id === sectorId);
       setSelectedSector(sector);
-      setFilteredProject(projects[sector?.id]);
+      if (lang.code === 'en') {
+        setFilteredProject(en_projects[sector?.id]);
+      } else {
+        setFilteredProject(projects[sector?.id]);
+      }
 
       if (projectId) {
-        const project = projects[sectorId].find((p: any) => p.id === projectId);
+        let project: any;
+        if (lang.code === 'en') {
+          setCurrentProject(en_projects);
+          project = en_projects[sectorId].find((p: any) => p.id === projectId);
+        } else {
+          setCurrentProject(projects);
+          project = currentProject[sectorId].find(
+            (p: any) => p.id === projectId
+          );
+        }
+
         setSelectedProject(project);
       }
     }
-  }, []);
+  }, [lang]);
 
   const updateURL = (sector: any, project: any, filename: any) => {
     const params = new URLSearchParams();
     if (sector) params.set('sector', sector.id);
     if (project) params.set('project', project.id);
     if (filename) params.set('fn', filename);
-    setFilteredProject(projects[sector?.id]);
+    setFilteredProject(currentProject[sector?.id]);
     window.history.pushState({}, '', `${window.location.pathname}?${params}`);
   };
 
@@ -68,7 +94,7 @@ const Sectors = () => {
   const handleSearch = (e: any) => {
     e.preventDefault();
     const search = e.target?.value;
-    const list = projects[selectedSector.id].filter((p: any) =>
+    const list = currentProject[selectedSector.id].filter((p: any) =>
       p.name.toLowerCase().includes(search.toLowerCase())
     );
     setFilteredProject(list);
@@ -133,6 +159,10 @@ const Sectors = () => {
               <ChevronLeft size={20} />
               Retour aux secteurs
             </button>
+            <Button variant='outline' size='sm' onClick={handleLangChange}>
+              Changer de langue
+            </Button>
+
             <img
               src={`/resources/projects/${selectedSector.slug}/icon.png`}
               alt={selectedSector.name}
@@ -174,6 +204,7 @@ const Sectors = () => {
           project={selectedProject}
           sector={selectedSector}
           onBack={handleBack}
+          lang={lang}
         />
       )}
     </div>
