@@ -34,6 +34,12 @@ export const sectors = [
     name: "Energie",
     slug: "energie",
     icon: "💻"
+  },
+  {
+    id: "7",
+    name: "Numérique",
+    slug: "numerique",
+    icon: "💻"
   }
 ];
 
@@ -110,6 +116,28 @@ export const projects: any = {
 
   "5": [ // Economie Verte
     { id: "5.1", name: "Restauration et Gestion durable des forêts de Mbao et Sébikhotane" }
+  ],
+
+  "6": [ // Energie
+  ],
+
+  "7": [ // Numérique
+    { id: "7.1", name: "Extension et renforcement du backbone national et maillage du territoire par un réseau fibre optique" },
+    { id: "7.2", name: "Couverture universelle du territoire par le recours aux réseaux satellitaires dans les zones blanches" },
+    { id: "7.3", name: "Renforcement de la qualité et des performances du réseau et alignement sur les standards internationaux (bande passante, câble sous-marins, QoS, redondance, sécurité, etc.)" },
+    { id: "7.4", name: "Mise en place d’un Cloud National Souverain" },
+    { id: "7.5", name: "Mise en place d’une infrastructure de gestion de clés et signature électronique à vocation civile (PKI civile)" },
+    { id: "7.6", name: "Mise en place d'un SOC et d'un CERT/CSIRT nationaux" },
+    { id: "7.7", name: "Infrastructure Publique Numérique (e-ID, e-Sign, e-Payment, Interopérabilité)" },
+    { id: "7.8", name: "Définir et mettre en œuvre une Architecture d’Entreprise Gouvernementale (AEG)" },
+    { id: "7.9", name: "Mise en place d'un Guichet Unique et espaces de proximité du service publique avec un centre de services dédié" },
+    { id: "7.10", name: "Mise à disposition d'infrastructures et de ressources pour l’écosystème numérique (Datacenter, Super calculateur, environnement de développement, etc.)" },
+    { id: "7.11", name: "Création d'une industrie manufacturière du numérique (assemblage, production de composants et d'équipements électroniques)" },
+    { id: "7.12", name: "Accompagnement de l'administration pour l'Efficacité énergétique et la réduction de l'empreinte carbone (smart building, etc.)" },
+    { id: "7.13", name: "Renforcement et coordination de la sécurité publique (vidéo-surveillance, contraventions, services d'urgence, etc.)" },
+    { id: "7.14", name: "Projet de restructuration du réseau de transport en commun de Dakar (RTC-DK)" },
+    { id: "7.15", name: "Système de gestion intelligente du trafic automobile à Dakar (ITS)" },
+    { id: "7.16", name: "Programme de Digitalisation du secteur informel et des micro entreprises" },
   ]
 };
 
@@ -187,5 +215,27 @@ export const en_projects: any = {
 
   "5": [ // Green Economy
     { id: "5.1", name: "Restoration and Management of Mbao and Sébikhotane Forests" }
+  ],
+
+  "6": [ // Energy
+  ],
+
+  "7": [ // Digital
+    { id: "7.1", name: "Extension and strengthening of the national backbone and coverage of the territory by a fiber optic network" },
+    { id: "7.2", name: "Universal coverage of the territory through the use of satellite networks in white areas" },
+    { id: "7.3", name: "Strengthening network quality and performance and aligning with international standards (bandwidth, submarine cables, QoS , redundancy, security, etc.)" },
+    { id: "7.4", name: "Implementation of a National Sovereign Cloud" },
+    { id: "7.5", name: "Implementation of a civil key management and electronic signature infrastructure (civil PKI)" },
+    { id: "7.6", name: "Establishment of a national SOC and CERT/CSIRT" },
+    { id: "7.7", name: "Digital Public Infrastructure ( e-ID , e- Sign , e- Payment , Interoperability)" },
+    { id: "7.8", name: "Define and implement a Government Enterprise Architecture (GEA)" },
+    { id: "7.9", name: "Establishment of a One-Stop Shop and local public service areas with a dedicated service center" },
+    { id: "7.10", name: "Provision of infrastructure and resources for the digital ecosystem (Datacenter, Supercomputer, development environment, etc.)" },
+    { id: "7.11", name: "Creation of a digital manufacturing industry (assembly, production of electronic components and equipment)" },
+    { id: "7.12", name: "Supporting the administration for energy efficiency and reducing the carbon footprint (smart building, etc.)" },
+    { id: "7.13", name: "Strengthening and coordinating public security (video surveillance, fines, emergency services, etc.)" },
+    { id: "7.14", name: "Dakar Public Transport Network Restructuring Project (RTC-DK)" },
+    { id: "7.15", name: "Intelligent Traffic Management System in Dakar (ITS)" },
+    { id: "7.16", name: "Digitalization Program for the Informal Sector and Micro Enterprises" },
   ]
 }
