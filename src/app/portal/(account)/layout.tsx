@@ -12,6 +12,8 @@ import { Button } from '@/components/ui/button';
 import { auth, signOut } from 'auth';
 import { redirect, useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 
 // !STARTERCONF Change these default meta
 // !STARTERCONF Look at @/constant/config to change them
@@ -85,6 +87,8 @@ export default async function RootLayout({
     redirect('/'); // Redirige vers la page de connexion après la déconnexion
   };
 
+  const t = await getTranslations('HomePage');
+
   return (
     <html lang='fr'>
       <body>
@@ -92,7 +96,7 @@ export default async function RootLayout({
           <div className='w-full p-12 flex gap-12 flex-col-reverse md:flex-row items-center justify-between'>
             <div className='flex md:flex-col-reverse md:items-start md:gap-4 items-center justify-between w-full space-x-4'>
               <p className='text-lg md:text-3xl font-semibold underline underline-offset-8'>
-                Bienvenue {session?.user?.firstName}!
+                {t('welcome')} {session?.user?.firstName}!
               </p>
               <div className='flex flex-col md:flex-row gap-4'>
                 {session && (

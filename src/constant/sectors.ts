@@ -75,13 +75,13 @@ export const projects: any = {
     { id: "1.32", name: "Projet d'aménagement quatre cuvettes Podor" },
     { id: "1.33", name: "Réalisation des pistes de désenclavement du delta" },
     { id: "1.34", name: "Aménagement des assiettes restantes PDIDAS" },
+    { id: "1.41", name: "AUTOROUTE DE L'EAU" },
     { id: "1.35", name: "Programme Promotion Fermes Agricoles Individuelles (PROFII)" },
     { id: "1.36", name: "Modernisation Des Villes Religieuses" },
     { id: "1.37", name: "Projet de forages à usage alimentaire et agricole" },
     { id: "1.38", name: "Projet d'autonomisation économique femmes secteur agricole" },
     { id: "1.39", name: "Projet SUXALI SA GOX" },
     { id: "1.40", name: "Hangars De Stockage" },
-    // { id: "1.41", name: "AUTOROUTE DE L'EAU" }
   ],
 
   "2": [ // Industrialisation  
@@ -181,7 +181,8 @@ export const en_projects: any = {
     { id: "4.7", name: "African Tourist Markets Fair" },
     { id: "4.8", name: "Senegal in One Click" },
     { id: "4.9", name: "Development of Cruise and Coastal Tourism" },
-    { id: "4.10", name: "Tourism Development Strategies for JOJ Dakar 2026" }
+    { id: "4.10", name: "Tourism Development Strategies for JOJ Dakar 2026" },
+    // { id: "4.10x", name: "AEROVILLE" }
   ],
 
   "5": [ // Green Economy

@@ -9,12 +9,17 @@ import Link from 'next/link';
 import Image from 'next/image';
 import LogoApix from '~/images/logo-apix.png';
 import { Input } from '@/components/ui/input';
+import { useRouter } from 'next/navigation';
+import { update } from 'lodash';
 
 const Sectors = () => {
+  const router = useRouter();
+  const params = new URLSearchParams();
+  const langId = params.get('lang');
   const [selectedSector, setSelectedSector] = useState<any>(null);
   const [selectedProject, setSelectedProject] = useState(null);
   const [filteredProject, setFilteredProject] = useState([]);
-  const [lang, setLang] = useState({ name: 'Anglais', code: 'en' });
+  const [lang, setLang] = useState({ name: 'Français', code: 'fr' });
   const [currentProject, setCurrentProject] = useState(projects);
 
   const handleLangChange = () => {
@@ -25,6 +30,8 @@ const Sectors = () => {
       setCurrentProject(projects);
       setLang({ name: 'Français', code: 'fr' });
     }
+    const clang = lang.code === 'fr' ? 'en' : 'fr';
+    updateURL(selectedSector, selectedProject, null, clang);
   };
 
   useEffect(() => {
@@ -58,11 +65,17 @@ const Sectors = () => {
     }
   }, [lang]);
 
-  const updateURL = (sector: any, project: any, filename: any) => {
+  const updateURL = (
+    sector: any,
+    project: any,
+    filename: any,
+    lang: any = 'fr'
+  ) => {
     const params = new URLSearchParams();
     if (sector) params.set('sector', sector.id);
     if (project) params.set('project', project.id);
     if (filename) params.set('fn', filename);
+    if (lang) params.set('lang', lang);
     setFilteredProject(currentProject[sector?.id]);
     window.history.pushState({}, '', `${window.location.pathname}?${params}`);
   };
@@ -160,7 +173,9 @@ const Sectors = () => {
               Retour aux secteurs
             </button>
             <Button variant='outline' size='sm' onClick={handleLangChange}>
-              Changer de langue
+              {langId === 'fr' || lang.code === 'fr'
+                ? 'Version anglaise'
+                : 'Version française'}
             </Button>
 
             <img

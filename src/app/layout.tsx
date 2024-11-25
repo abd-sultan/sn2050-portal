@@ -1,5 +1,7 @@
 import { Metadata } from 'next';
 import * as React from 'react';
+import { NextIntlClientProvider } from 'next-intl';
+import { getLocale, getMessages } from 'next-intl/server';
 
 import '@/styles/globals.css';
 // !STARTERCONF This is for demo purposes, remove @/styles/colors.css import immediately
@@ -59,8 +61,13 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const session = await auth();
+  const locale = await getLocale();
+
+  // Providing all messages to the client
+  // side is the easiest way to get started
+  const messages = await getMessages();
   return (
-    <html lang='fr'>
+    <html lang={locale}>
       <head>
         <link
           href='https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,300;0,500;0,600;0,700;1,100&display=swap'
@@ -84,10 +91,12 @@ export default async function RootLayout({
         ></link>
       </head>
       <body>
-        <SessionProvider session={session}>
-          <Toaster />
-          {children}
-        </SessionProvider>
+        <NextIntlClientProvider messages={messages}>
+          <SessionProvider session={session}>
+            <Toaster />
+            {children}
+          </SessionProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   );
