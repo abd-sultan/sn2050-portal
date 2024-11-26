@@ -138,8 +138,6 @@ const Sectors = () => {
                 />
               </div>
             ))}
-          </div>
-          <div className='grid grid-cols-2 md:grid-cols-3 gap-12 mt-12'>
             <div>
               <Link href='/portal/infos?sector=PPP' className='w-full'>
                 <Button className='w-full h-12 md:h-20 rounded-xl rounded-tr-[1.7rem] rounded-bl-[1.7rem] md:rounded-tr-[2.5rem] md:rounded-bl-[3rem] bg-flag-red'>
