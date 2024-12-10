@@ -33,6 +33,7 @@ export default function UsersList() {
   const [currentPage, setCurrentPage] = useState(1);
   const [showEmailForm, setShowEmailForm] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
+  const [filteredUser, setFilteredUser] = useState([]);
 
   // Exemple de données d'utilisateurs
   const { data: users, isLoading } = useQuery({
@@ -41,6 +42,7 @@ export default function UsersList() {
       const response = await fetch('/api/users/find');
       const data = await response.json();
       console.log('🚀 ~ queryFn: ~ data:', data.users);
+      setFilteredUser(data.users);
       return data.users;
     },
   });
@@ -102,7 +104,7 @@ export default function UsersList() {
             <SelectItem value='Finance'>Finance</SelectItem>
           </SelectContent>
         </Select> */}
-        <Select value={status} onValueChange={setStatus}>
+        {/* <Select value={status} onValueChange={setStatus}>
           <SelectTrigger className='md:w-1/4'>
             <SelectValue placeholder="Statut d'inscription" />
           </SelectTrigger>
@@ -111,7 +113,7 @@ export default function UsersList() {
             <SelectItem value='Validé'>Validé</SelectItem>
             <SelectItem value='En attente'>En attente</SelectItem>
           </SelectContent>
-        </Select>
+        </Select> */}
       </div>
       <Table>
         <TableHeader>

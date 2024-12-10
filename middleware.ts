@@ -1,6 +1,6 @@
 import NextAuth from 'next-auth';
 import { auth as middleware } from 'auth';
-import { DEFAULT_REDIRECT, PUBLIC_ROUTES, ROOT } from '@/lib/route';
+import { DEFAULT_REDIRECT, PUBLIC_ROUTES, ROOT } from '___src/lib/route';
 
 export default middleware((req) => {
   const { nextUrl } = req;

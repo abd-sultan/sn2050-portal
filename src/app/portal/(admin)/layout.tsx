@@ -13,6 +13,7 @@ import { auth, signOut } from 'auth';
 import { useSession } from 'next-auth/react';
 import { redirect } from 'next/navigation';
 import { Button } from '@/components/ui/button';
+import { Toaster } from '@/components/ui/toaster';
 
 // !STARTERCONF Change these default meta
 // !STARTERCONF Look at @/constant/config to change them
@@ -107,6 +108,7 @@ export default async function RootLayout({
             </Link>
           </div>
           {children}
+          <Toaster />
         </main>
       </body>
     </html>

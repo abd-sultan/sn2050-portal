@@ -8,6 +8,7 @@ import ProjectsList from '../components/ProjectsList';
 import { getConnectedUser } from '@/lib/utils';
 import { redirect } from 'next/navigation';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import SectorsProjectsManager from '@/app/portal/(admin)/components/SectorsProjectsManager';
 
 export default function Component() {
   const [queryClient] = useState(() => new QueryClient());
@@ -24,8 +25,8 @@ export default function Component() {
         return <Dashboard />;
       case 'users':
         return <UsersList />;
-      /* case 'projects':
-        return <ProjectsList />; */
+      case 'projects':
+        return <SectorsProjectsManager />;
       default:
         return <Dashboard />;
     }
@@ -65,7 +66,7 @@ export default function Component() {
                 <span className='text-xs'>Inscriptions</span>
               </button>
             </li>
-            {/* <li className='flex-1'>
+            <li className='flex-1'>
               <button
                 onClick={() => setActiveTab('projects')}
                 className={`flex flex-col items-center w-full py-2 ${
@@ -77,7 +78,7 @@ export default function Component() {
                 <FolderKanban className='h-6 w-6' />
                 <span className='text-xs'>Projets</span>
               </button>
-            </li> */}
+            </li>
           </ul>
         </nav>
       </div>

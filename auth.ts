@@ -1,10 +1,10 @@
 import bcrypt from 'bcrypt';
-import type { UserType, UserResponseType } from "@/types/user";
+import type { UserType, UserResponseType } from "___src/types/user";
 import NextAuth, { Session } from "next-auth"
 import Credentials from "next-auth/providers/credentials"
-import connect from "@/lib/db";
-import User from "@/models/user.model";
-import { signInSchema } from '@/lib/zod';
+import connect from "___src/lib/db";
+import User from "___src/models/user.model";
+import { signInSchema } from '___src/lib/zod';
 import { AdapterUser } from "next-auth/adapters";
 import { JWT } from "next-auth/jwt";
 
@@ -82,7 +82,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         token.createdAt = user?.createdAt
         token.updatedAt = user?.updatedAt
       }
-      console.log("🚀 ~ jwt: ~ token, user:", token, user)
+      // console.log("🚀 ~ jwt: ~ token, user:", token, user)
       return token
     },
     session: async ({ session, token }: {
@@ -105,7 +105,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       }
 
       session.user = userObject
-      console.log("🚀 ~ session: ~ session, token:", session, token)
+      // console.log("🚀 ~ session: ~ session, token:", session, token)
       return session
     }
   },
