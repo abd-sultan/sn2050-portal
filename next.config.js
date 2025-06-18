@@ -3,6 +3,7 @@ const createNextIntlPlugin = require('next-intl/plugin');
 
 const withNextIntl = createNextIntlPlugin();
 
+// Configuration pour gérer les packages natifs comme canvas
 const nextConfig = {
   eslint: {
     dirs: ['src'],
@@ -54,8 +55,22 @@ const nextConfig = {
 
     // Modify the file loader rule to ignore *.svg, since we have it handled now.
     fileLoaderRule.exclude = /\.svg$/i;
+    
+    // Résoudre les problèmes avec canvas (utilisé par pdfjs/react-pdf)
+    if (!config.resolve) {
+      config.resolve = {};
+    }
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      canvas: false,
+    };
 
     return config;
+  },
+  
+  // Configuration spéciale pour exclure les modules Node.js côté serveur
+  experimental: {
+    serverComponentsExternalPackages: ['canvas'],
   },
 };
 

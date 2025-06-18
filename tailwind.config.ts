@@ -12,7 +12,8 @@ export default {
 				roboto: ['Roboto Mono', 'sans-serif'],
 				jamjuree: ['Bai Jamjuree', 'sans-serif'],
 				urbanist: ['Urbanist', 'sans-serif'],
-				indiflower: ['Indie Flower', 'cursive']
+				indiflower: ['Indie Flower', 'cursive'],
+				exo2: ['Exo_2', 'sans-serif']
 			},
 			colors: {
 				flag: {

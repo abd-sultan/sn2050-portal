@@ -1,17 +1,20 @@
+import { auth } from 'auth';
 import { Metadata } from 'next';
-import * as React from 'react';
+import { Exo_2 } from 'next/font/google';
+import { SessionProvider } from 'next-auth/react';
 import { NextIntlClientProvider } from 'next-intl';
 import { getLocale, getMessages } from 'next-intl/server';
+import * as React from 'react';
 
 import '@/styles/globals.css';
 // !STARTERCONF This is for demo purposes, remove @/styles/colors.css import immediately
 import '@/styles/colors.css';
 
-import { SessionProvider } from 'next-auth/react';
 import { Toaster } from '@/components/ui/toaster';
 
 import { siteConfig } from '@/constant/config';
-import { auth } from 'auth';
+
+const exo2 = Exo_2({ subsets: ['latin'] });
 
 // !STARTERCONF Change these default meta
 // !STARTERCONF Look at @/constant/config to change them
@@ -26,9 +29,9 @@ export const metadata: Metadata = {
   // !STARTERCONF this is the default favicon, you can generate your own from https://realfavicongenerator.net/
   // ! copy to /favicon folder
   icons: {
-    icon: '/images/logo-sn2050.jpg',
-    shortcut: '/images/logo-sn2050.jpg',
-    apple: '/images/logo-sn2050.jpg',
+    icon: '/images/logo-white-2.png',
+    shortcut: '/images/logo-white-2.png',
+    apple: '/images/logo-white-2.png',
   },
   manifest: `/favicon/site.webmanifest`,
   openGraph: {
@@ -36,7 +39,7 @@ export const metadata: Metadata = {
     title: siteConfig.title,
     description: siteConfig.description,
     siteName: siteConfig.title,
-    images: [`${siteConfig.url}/images/logo-sn2050.jpg`],
+    images: [`${siteConfig.url}/images/logo-white-2.png`],
     type: 'website',
     locale: 'en_US',
   },
@@ -44,7 +47,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: siteConfig.title,
     description: siteConfig.description,
-    images: [`${siteConfig.url}/images/logo-sn2050.jpg`],
+    images: [`${siteConfig.url}/images/logo-white-2.png`],
     // creator: '@th_clarence',
   },
   // authors: [
@@ -67,7 +70,7 @@ export default async function RootLayout({
   // side is the easiest way to get started
   const messages = await getMessages();
   return (
-    <html lang={locale}>
+    <html lang={locale} className={exo2.className}>
       <head>
         <link
           href='https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,300;0,500;0,600;0,700;1,100&display=swap'

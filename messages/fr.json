@@ -1,5 +1,24 @@
 {
   "HomePage": {
-    "welcome": "Bienvenue"
+    "welcome": "Bienvenue",
+    "title": "AGENDA NATIONAL DE TRANSFORMATION",
+    "subtitle": "Pour un SÉNÉGAL souverain, juste, prospère et ancré dans des valeurs fortes",
+    "footer": "Développé par",
+    "loops": [
+      "« Gouvernance et engagement panafricain »",
+      "« Aménagement et développement durable du territoire »",
+      "« Capital humain et justice sociale »",
+      "« Économie compétitive et création d'emplois »",
+      "« Réformes économiques, sociales et institutionnelles »",
+      "« Indépendance économique et nation souveraine »",
+      "« Pôle économique, culturel et technologique »",
+      "« Croissance inclusive et durable »",
+      "« Transformation systématique du Sénégal »",
+      "« Inclusion sociale et territoriale »",
+      "« Sénégal souverain, juste et prospère »",
+      "« Modèle de gouvernance et de transparence »",
+      "« État de droit et institutions publiques fortes »",
+      "« APIX au cœur du PROJET »"
+    ]
   }
 }

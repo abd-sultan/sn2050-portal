@@ -19,6 +19,7 @@ const Page = dynamic(() => import('react-pdf').then((mod) => mod.Page), {
 }); */
 
 import { Button } from '@/components/ui/button';
+import { ChevronLeftCircleIcon, ChevronRightCircleIcon } from 'lucide-react';
 
 const PDFViewer = ({ pdfUrl, scale = null }: any) => {
   const [numPages, setNumPages] = useState(null);
@@ -40,7 +41,21 @@ const PDFViewer = ({ pdfUrl, scale = null }: any) => {
   };
 
   return (
-    <div className='w-full flex flex-col items-center justify-center z-40 max-w-full mx-auto bg-transparent rounded-lg shadow-lg'>
+    <div className='w-full flex flex-col items-center justify-center z-40 max-w-full mx-auto bg-transparent rounded-lg shadow-lg relative'>
+      <button
+        className='p-2 rounded-full hover:bg-gray-100 absolute top-1/2 left-0 transform -translate-y-1/2 z-50'
+        onClick={() => setPageNumber(pageNumber - 1)}
+        disabled={pageNumber <= 1}
+      >
+        <ChevronLeftCircleIcon size={50} />
+      </button>
+      <button
+        className='p-2 rounded-full hover:bg-gray-100 absolute top-1/2 right-0 transform -translate-y-1/2 z-50'
+        onClick={() => setPageNumber(pageNumber + 1)}
+        disabled={pageNumber >= numPages!}
+      >
+        <ChevronRightCircleIcon size={50} />
+      </button>
       <Document
         file={pdfUrl}
         onLoadSuccess={onDocumentLoadSuccess}
@@ -57,7 +72,7 @@ const PDFViewer = ({ pdfUrl, scale = null }: any) => {
           className='mb-4 w-full max-w-full flex items-center justify-center'
         />
       </Document>
-      {numPages && numPages > 1 && (
+      {/* {numPages && numPages > 1 && (
         <div className='flex justify-between items-center mt-4 w-full'>
           <Button
             variant='default'
@@ -79,7 +94,7 @@ const PDFViewer = ({ pdfUrl, scale = null }: any) => {
             Suivant
           </Button>
         </div>
-      )}
+      )} */}
     </div>
   );
 };

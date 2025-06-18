@@ -1,5 +1,24 @@
 {
   "HomePage": {
-    "welcome": "Welcome"
+    "welcome": "Welcome",
+    "title": "NATIONAL TRANSFORMATION AGENDA",
+    "subtitle": "For a sovereign, just, prosperous SENEGAL with strong values",
+    "footer": "Developed by",
+    "loops": [
+      "« Governance and Pan-African engagement »",
+      "« Land planning and sustainable development »",
+      "« Human capital and social justice »",
+      "« Competitive economy and job creation »",
+      "« Economic, social and institutional reforms »",
+      "« Economic independence and sovereign nation »",
+      "« Economic, cultural and technological hub »",
+      "« Inclusive and sustainable growth »",
+      "« Systematic transformation of Senegal »",
+      "« Social and territorial inclusion »",
+      "« Sovereign, just and prosperous Senegal »",
+      "« Model of governance and transparency »",
+      "« Rule of law and strong public institutions »",
+      "« APIX at the heart of the PROJECT »"
+    ]
   }
 }
