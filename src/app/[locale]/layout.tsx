@@ -5,6 +5,12 @@ import { Exo_2 } from 'next/font/google';
 import { redirect } from 'next/navigation';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
+import dynamic from 'next/dynamic';
+
+// Import dynamique du ContactFAB pour éviter les problèmes de SSR
+const ContactFAB = dynamic(() => import('@/components/ContactFAB'), {
+  ssr: false,
+});
 
 const exo2 = Exo_2({
   subsets: ['latin'],
@@ -42,6 +48,7 @@ export default async function RootLayout({
       <body>
         <NextIntlClientProvider locale={locale} messages={messages}>
           {children}
+          <ContactFAB />
         </NextIntlClientProvider>
       </body>
     </html>
