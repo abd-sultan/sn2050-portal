@@ -62,7 +62,7 @@ export default function FIISPage() {
   const [isPDFModalOpen, setIsPDFModalOpen] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState<string | null>(null);
   const locale = searchParams.get('language') || 'FR';
-  const [videoId, setVideoId] = useState('hWFoCDadlK4'); // ID de la vidéo YouTube commune pour FR et EN
+  const [videoId, setVideoId] = useState('op7QIy61oVI'); // ID de la vidéo YouTube commune pour FR et EN
   const [currentPdfPath, setCurrentPdfPath] = useState('');
   const [pdfTitle, setPdfTitle] = useState('');
 
@@ -71,6 +71,7 @@ export default function FIISPage() {
     const language = searchParams.get('language');
     if (language && ['FR', 'EN'].includes(language)) {
       setSelectedLanguage(language);
+      setVideoId(language === 'EN' ? 'EJnU-E8gE68' : 'op7QIy61oVI');
     }
   }, [searchParams]);
 
@@ -133,7 +134,7 @@ export default function FIISPage() {
           allowFullScreen
           title='Background Video'
         />
-        <div className='absolute top-0 left-0 w-full h-full bg-black opacity-40'></div>
+        <div className='absolute top-0 left-0 w-full h-full bg-black opacity-0'></div>
       </div>
 
       {/* Overlay pour assombrir un peu la vidéo */}
