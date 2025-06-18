@@ -32,14 +32,13 @@ export default async function RootLayout({
   if (!locales.includes(locale)) {
     // Rediriger vers la locale par défaut 'fr' au lieu d'utiliser notFound()
     redirect('/fr');
-    return; // Cette ligne ne sera jamais exécutée mais elle est nécessaire pour TypeScript
   }
 
   // Load messages for the current locale
   const messages = await getMessages({ locale });
 
   return (
-    <html lang={locale} className={`${exo2.variable}`}>
+    <html lang={locale} className={`${exo2.variable} p-0`}>
       <body>
         <NextIntlClientProvider locale={locale} messages={messages}>
           {children}
