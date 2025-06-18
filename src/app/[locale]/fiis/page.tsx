@@ -62,9 +62,7 @@ export default function FIISPage() {
   const [isPDFModalOpen, setIsPDFModalOpen] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState<string | null>(null);
   const locale = searchParams.get('language') || 'FR';
-  const [videoSrc, setVideoSrc] = useState(
-    locale === 'EN' ? '/videos/intro_en.mp4' : '/videos/intro.mp4'
-  );
+  const [videoId, setVideoId] = useState('hWFoCDadlK4'); // ID de la vidéo YouTube commune pour FR et EN
   const [currentPdfPath, setCurrentPdfPath] = useState('');
   const [pdfTitle, setPdfTitle] = useState('');
 
@@ -80,19 +78,23 @@ export default function FIISPage() {
   const handleSelectLanguage = (language: string) => {
     setIsModalOpen(false);
     setSelectedLanguage(language);
-    // Mettre à jour la source vidéo
-    setVideoSrc(language === 'EN' ? '/videos/intro_en.mp4' : '/videos/intro.mp4');
+    // Plus besoin de changer la vidéo car on utilise la même pour les deux langues
   };
 
   // Afficher la modal PDF pour les packages
   const viewPackages = () => {
     if (selectedLanguage) {
-      const pdfPath = selectedLanguage === 'EN' 
-        ? '/docs/fiis/EN/PACKAGES-EN.pdf' 
-        : '/docs/fiis/FR/PACKAGES-FINALE-v3 3.pdf';
-      
+      const pdfPath =
+        selectedLanguage === 'EN'
+          ? '/docs/fiis/EN/PACKAGES-EN.pdf'
+          : '/docs/fiis/FR/PACKAGES-FINALE-v3 3.pdf';
+
       setCurrentPdfPath(pdfPath);
-      setPdfTitle(selectedLanguage === 'EN' ? 'FII Senegal Packages' : 'Packages FII Sénégal');
+      setPdfTitle(
+        selectedLanguage === 'EN'
+          ? 'FII Senegal Packages'
+          : 'Packages FII Sénégal'
+      );
       setIsPDFModalOpen(true);
     } else {
       setIsModalOpen(true);
@@ -102,12 +104,17 @@ export default function FIISPage() {
   // Afficher la modal PDF pour la plaquette
   const viewBrochure = () => {
     if (selectedLanguage) {
-      const pdfPath = selectedLanguage === 'EN' 
-        ? '/docs/fiis/EN/Plaquette-FIISEN25-ENv3.pdf' 
-        : '/docs/fiis/FR/Plaquette-APIX-FIISEN25-FINAL 2.pdf';
-      
+      const pdfPath =
+        selectedLanguage === 'EN'
+          ? '/docs/fiis/EN/Plaquette-FIISEN25-ENv3.pdf'
+          : '/docs/fiis/FR/Plaquette-APIX-FIISEN25-FINAL 2.pdf';
+
       setCurrentPdfPath(pdfPath);
-      setPdfTitle(selectedLanguage === 'EN' ? 'FII Senegal Brochure' : 'Plaquette FII Sénégal');
+      setPdfTitle(
+        selectedLanguage === 'EN'
+          ? 'FII Senegal Brochure'
+          : 'Plaquette FII Sénégal'
+      );
       setIsPDFModalOpen(true);
     } else {
       setIsModalOpen(true);
@@ -116,29 +123,31 @@ export default function FIISPage() {
 
   return (
     <div className='relative min-h-screen w-full overflow-hidden bg-black'>
-      {/* Vidéo en arrière-plan */}
-      <video
-        autoPlay
-        loop
-        playsInline
-        className='absolute top-0 left-0 w-full h-full object-cover opacity-60 z-0'
-      >
-        <source src={videoSrc} type='video/mp4' />
-        Votre navigateur ne prend pas en charge les vidéos HTML5.
-      </video>
+      {/* Vidéo YouTube en arrière-plan */}
+      <div className='absolute top-0 left-0 w-full h-full z-0'>
+        <iframe
+          src={`https://www.youtube.com/embed/${videoId}?autoplay=1&mute=0&controls=0&loop=1&playlist=${videoId}&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&disablekb=1`}
+          className='absolute top-0 left-0 w-full h-full object-cover opacity-60'
+          frameBorder='0'
+          allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
+          allowFullScreen
+          title='Background Video'
+        />
+        <div className='absolute top-0 left-0 w-full h-full bg-black opacity-40'></div>
+      </div>
 
       {/* Overlay pour assombrir un peu la vidéo */}
       {/* <div className='absolute top-0 left-0 w-full h-full bg-white opacity-5 z-10'></div> */}
 
       <div className='absolute bottom-10 left-1/2 transform -translate-x-1/2 z-20 flex flex-row items-center gap-4'>
-        <Button 
-          className='bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg shadow-lg' 
+        <Button
+          className='bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg shadow-lg'
           onClick={viewPackages}
         >
           {selectedLanguage === 'EN' ? 'Packages' : 'Packages'}
         </Button>
-        <Button 
-          className='bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg shadow-lg' 
+        <Button
+          className='bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg shadow-lg'
           onClick={viewBrochure}
         >
           {selectedLanguage === 'EN' ? 'Brochure' : 'Plaquette'}
@@ -151,9 +160,9 @@ export default function FIISPage() {
         onClose={() => setIsModalOpen(false)}
         onSelectLanguage={handleSelectLanguage}
       />
-      
+
       {/* Modal pour afficher les PDF */}
-      <PDFModal 
+      <PDFModal
         isOpen={isPDFModalOpen}
         onClose={() => setIsPDFModalOpen(false)}
         pdfPath={currentPdfPath}
