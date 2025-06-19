@@ -4,6 +4,10 @@
     "title": "NATIONAL TRANSFORMATION AGENDA",
     "subtitle": "For a sovereign, just, prosperous SENEGAL with strong values",
     "footer": "Developed by",
+    "backButton": "Back",
+    "fiis": "FII Senegal",
+    "transformativeProjects": "Transformative Projects",
+    "senegalInvestment": "Senegal, the investment hub",
     "loops": [
       "« Governance and Pan-African engagement »",
       "« Land planning and sustainable development »",
@@ -20,5 +24,43 @@
       "« Rule of law and strong public institutions »",
       "« APIX at the heart of the PROJECT »"
     ]
+  },
+  "ApixPage": {
+    "title": "Senegal, investment crossroads",
+    "back": "Back",
+    "availableDocuments": "Available documents",
+    "clickToView": "Click to view",
+    "documentViewer": "Document viewer",
+    "noDocumentSelected": "No document selected",
+    "brochureInvestirAuSenegal": "Brochure - Invest in Senegal",
+    "guideDuCreateurDentreprise": "Business Creation Guide",
+    "syntheseCodeDesInvestissements": "Investment Code Summary",
+    "ficheResumeZonesEconomiquesSpeciales": "Summary Sheet - Special Economic Zones",
+    "brochureInvestInSenegal": "Brochure - Invest in Senegal",
+    "businessCreationGuide": "Business Creation Guide",
+    "investmentCodeSummary": "Investment Code Summary",
+    "summarySheetSpecialEconomicZones": "Summary Sheet - Special Economic Zones"
+  },
+  "FIISPage": {
+    "title": "FII Senegal",
+    "subtitle": "Strategic Investment Forum", 
+    "packages": "Packages",
+    "brochure": "Brochure",
+    "packagesTitle": "FII Senegal Packages",
+    "brochureTitle": "FII Senegal Brochure",
+    "chooseLanguage": "Choose language"
+  },
+  "Common": {
+    "cancel": "Cancel",
+    "selectLanguage": "Select a language",
+    "loading": "Loading...",
+    "chooseLanguage": "Choisissez la langue / Choose language",
+    "back": "Back",
+    "loading_document": "Loading document..."
+  },
+  "ProjetsPage": {
+    "title": "Transformative Projects",
+    "back": "Back",
+    "loading": "Loading..."
   }
 }

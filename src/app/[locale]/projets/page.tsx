@@ -1,11 +1,13 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
-import dynamic from 'next/dynamic';
-import { Button } from '@/components/ui/button';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { useState, useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+
 import { ChevronLeftIcon } from 'lucide-react';
+import dynamic from 'next/dynamic';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useTranslations } from 'next-intl';
+
+import { Button } from '@/components/ui/button';
 
 // Import dynamique du PDFViewer pour éviter les problèmes de SSR
 const PDFViewer = dynamic(
@@ -22,7 +24,7 @@ const PDFViewer = dynamic(
 );
 
 export default function ProjetsPage() {
-  const t = useTranslations('HomePage');
+  const t = useTranslations('ProjetsPage');
   const router = useRouter();
   const searchParams = useSearchParams();
   const [isLoading, setIsLoading] = useState(true);
@@ -79,7 +81,7 @@ export default function ProjetsPage() {
     return (
       <div className="min-h-screen bg-gray-900 flex flex-col items-center justify-center">
         <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-        <p className="mt-4 text-white text-lg">Chargement...</p>
+        <p className="mt-4 text-white text-lg">{t('loading')}</p>
       </div>
     );
   }
@@ -90,7 +92,7 @@ export default function ProjetsPage() {
       <div className="w-full px-6 py-3">
         <div className="flex justify-between items-center max-w-7xl mx-auto">
           <h1 className="text-3xl font-bold text-white font-exo2">
-            Projets Transformateurs
+            {t('title')}
           </h1>
           
           <Button 
@@ -99,7 +101,7 @@ export default function ProjetsPage() {
             className="flex items-center text-gray-300 hover:text-white"
           >
             <ChevronLeftIcon size={20} className="mr-1" />
-            {t('backButton') || "Retour"}
+            {t('back')}
           </Button>
         </div>
         <div className="h-0.5 bg-gradient-to-r from-blue-600 to-transparent mt-2"></div>

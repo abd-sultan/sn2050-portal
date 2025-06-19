@@ -1,12 +1,14 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
-import { Button } from '@/components/ui/button';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { useState, useEffect } from 'react';
-import { useLocale } from 'next-intl';
 import { ChevronLeftIcon, FileIcon } from 'lucide-react';
 import dynamic from 'next/dynamic';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useTranslations } from 'next-intl';
+import { useLocale } from 'next-intl';
+import { useEffect, useState } from 'react';
+
+import { Button } from '@/components/ui/button';
+
 import PDFViewer from '@/app/portal/(account)/components/PDFViewer';
 
 // Import dynamique du DocumentViewer pour éviter les problèmes de SSR
@@ -30,10 +32,10 @@ interface PdfDocument {
 }
 
 export default function ApixPage() {
-  const t = useTranslations('HomePage');
   const router = useRouter();
-  const locale = useLocale();
   const searchParams = useSearchParams();
+  const locale = useLocale();
+  const t = useTranslations('ApixPage');
   const [selectedFile, setSelectedFile] = useState<PdfDocument | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [documents, setDocuments] = useState<PdfDocument[]>([]);
@@ -50,60 +52,60 @@ export default function ApixPage() {
   }, [searchParams]);
 
   useEffect(() => {
-    // Définir les documents disponibles en fonction de la langue sélectionnée
-    const getDocuments = () => {
+    // Récupérer la liste des documents en fonction de la langue sélectionnée
+    const getDocuments = (language: string) => {
       if (language === 'FR') {
         return [
           {
+            name: 'Brochure_InvestirAuSENEGAL_French_140525.pdf',
+            path: '/docs/apix/FR/Brochure_InvestirAuSENEGAL_French_140525.pdf',
+            displayName: t('brochureInvestirAuSenegal'),
+          },
+          {
             name: "2.Guide du créateur d'entreprise MAJ 02.2023.pdf",
             path: `/docs/apix/FR/2.Guide du créateur d'entreprise MAJ 02.2023.pdf`,
-            displayName: "Guide du créateur d'entreprise",
+            displayName: t('guideDuCreateurDentreprise'),
           },
           {
             name: '8.Synthèse CI MAJ 02.2023_.pdf',
             path: '/docs/apix/FR/8.Synthèse CI MAJ 02.2023_.pdf',
-            displayName: 'Synthèse Code des Investissements',
-          },
-          {
-            name: 'Brochure_InvestirAuSENEGAL_French_140525.pdf',
-            path: '/docs/apix/FR/Brochure_InvestirAuSENEGAL_French_140525.pdf',
-            displayName: 'Brochure - Investir au Sénégal',
+            displayName: t('syntheseCodeDesInvestissements'),
           },
           {
             name: 'FICHE RESUME ZES.pdf',
             path: '/docs/apix/FR/FICHE RESUME ZES.pdf',
-            displayName: 'Fiche résumé - Zones Économiques Spéciales',
+            displayName: t('ficheResumeZonesEconomiquesSpeciales'),
           },
         ];
       } else {
         return [
           {
+            name: 'Brochure_InvestirAuSENEGAL_Anglais_140525.pdf',
+            path: '/docs/apix/EN/Brochure_InvestirAuSENEGAL_Anglais_140525.pdf',
+            displayName: t('brochureInvestInSenegal'),
+          },
+          {
             name: "Guide du créateur d'entreprise.pdf",
             path: "/docs/apix/EN/Guide du créateur d'entreprise.pdf",
-            displayName: 'Business Creation Guide',
+            displayName: t('businessCreationGuide'),
           },
           {
             name: 'Résumé code des investissements.pdf',
             path: '/docs/apix/EN/Résumé code des investissements.pdf',
-            displayName: 'Investment Code Summary',
-          },
-          {
-            name: 'Brochure_InvestirAuSENEGAL_Anglais_140525.pdf',
-            path: '/docs/apix/EN/Brochure_InvestirAuSENEGAL_Anglais_140525.pdf',
-            displayName: 'Brochure - Invest in Senegal',
+            displayName: t('investmentCodeSummary'),
           },
           {
             name: 'FICHE DE RESUME ZES EN ANGLAIS.pdf',
             path: '/docs/apix/EN/FICHE DE RESUME ZES EN ANGLAIS.pdf',
-            displayName: 'Summary Sheet - Special Economic Zones',
+            displayName: t('summarySheetSpecialEconomicZones'),
           },
         ];
       }
     };
 
-    setDocuments(getDocuments());
+    setDocuments(getDocuments(language));
     setIsLoading(false);
-  }, [language]);
+  }, [language, t]);
 
   // Gérer la sélection d'un document
   const handleSelectDocument = (document: PdfDocument) => {
@@ -130,10 +132,8 @@ export default function ApixPage() {
       {/* En-tête avec titre et bouton retour */}
       <div className='py-4 px-6 bg-gray-800 shadow-md sticky top-0 z-10'>
         <div className='max-w-7xl mx-auto flex flex-wrap gap-4 justify-between items-center'>
-          <h1 className='text-2xl font-bold font-exo2 text-white'>
-            {locale === 'fr'
-              ? 'Sénégal, carrefour des investissements'
-              : 'Senegal, crossroads of investments'}
+          <h1 className='text-2xl md:text-3xl font-bold text-white font-exo2'>
+            {t('title')}
           </h1>
 
           <Button
@@ -142,7 +142,7 @@ export default function ApixPage() {
             className='text-gray-300 hover:text-white hover:bg-gray-700'
           >
             <ChevronLeftIcon size={20} className='mr-1' />
-            {locale === 'fr' ? 'Retour' : 'Back'}
+            {t('back')}
           </Button>
         </div>
       </div>
@@ -153,9 +153,7 @@ export default function ApixPage() {
           // Liste des documents disponibles
           <div>
             <h2 className='text-xl font-bold mb-6 text-white'>
-              {locale === 'fr'
-                ? 'Documents disponibles'
-                : 'Available documents'}
+              {t('availableDocuments')}
             </h2>
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
               {documents.map((doc, index) => (
@@ -171,9 +169,7 @@ export default function ApixPage() {
                     </h3>
                   </div>
                   <p className='text-gray-400 text-sm'>
-                    {locale === 'fr'
-                      ? 'Cliquez pour consulter'
-                      : 'Click to view'}
+                    {t('clickToView')}
                   </p>
                 </div>
               ))}

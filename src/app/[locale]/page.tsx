@@ -1,16 +1,16 @@
 'use client';
 
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { useLocale, useTranslations } from 'next-intl';
+import * as React from 'react';
+import { useState } from 'react';
 import '@/lib/env';
 
 import LanguageSelectionModal from '@/components/LanguageSelectionModal';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 import { Button } from '@/components/ui/button';
 import { TextLoop } from '@/components/ui/text-loop';
-import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-import { useTranslations, useLocale } from 'next-intl';
-import * as React from 'react';
-import { useState } from 'react';
 
 import LogoApp from '~/images/logo-white-2.png';
 import Logo from '~/svg/LogoApix.svg';
@@ -38,11 +38,10 @@ export default function HomePage() {
   // Fonction pour naviguer vers la page correspondante avec la langue sélectionnée
   const handleSelectLanguage = (language: string) => {
     setIsModalOpen(false);
-    
+
     // Construire l'URL avec le locale actuel et le paramètre de langue
     // Pour Next.js App Router avec internationalisation, les routes doivent conserver le préfixe de locale
-    const path = `/${locale}${targetRoute}?language=${language}`;
-    console.log(`Redirection vers: ${path}`);
+    const path = `/${language.toLowerCase()}${targetRoute}?language=${language}`;
     router.push(path);
   };
 
@@ -90,19 +89,19 @@ export default function HomePage() {
             onClick={() => handleDocumentClick('/fiis')}
             className='bg-white/5 hover:bg-black/50 text-white font-bold py-6 text-lg font-exo2 shadow-lg'
           >
-            FII Senegal
+            {t('fiis')}
           </Button>
           <Button
             onClick={() => handleDocumentClick('/projets')}
             className='bg-white/5 hover:bg-black/50 text-white font-bold py-6 text-lg font-exo2 shadow-lg'
           >
-            Projets Transformateurs
+            {t('transformativeProjects')}
           </Button>
           <Button
             onClick={() => handleDocumentClick('/apix')}
             className='bg-white/5 hover:bg-black/50 text-white font-bold py-6 text-lg font-exo2 shadow-lg'
           >
-            Sénégal, carrefour des investissements
+            {t('senegalInvestment')}
           </Button>
         </div>
 

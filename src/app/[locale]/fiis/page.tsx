@@ -1,12 +1,13 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
-import { Button } from '@/components/ui/button';
-import { useRouter } from 'next/navigation';
-import { useState, useEffect } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
+
 import Image from 'next/image';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useLocale, useTranslations } from 'next-intl';
+
 import PDFModal from '@/components/PDFModal';
+import { Button } from '@/components/ui/button';
 
 // Modèle pour la modal de langue
 const LanguageModal = ({
@@ -18,6 +19,9 @@ const LanguageModal = ({
   onClose: () => void;
   onSelectLanguage: (lang: string) => void;
 }) => {
+  // Les hooks doivent être appelés au niveau supérieur avant toute instruction conditionnelle
+  const t = useTranslations('Common');
+  
   if (!isOpen) return null;
 
   return (
@@ -26,8 +30,11 @@ const LanguageModal = ({
         className='bg-gray-900 p-8 rounded-lg shadow-lg border border-gray-700 w-full max-w-md'
         onClick={(e) => e.stopPropagation()}
       >
+        <h1 className='text-5xl font-bold text-white drop-shadow-lg mb-4 font-exo2 tracking-wider'>
+          {t('title')}
+        </h1>
         <h2 className='text-2xl font-bold text-white mb-6 text-center'>
-          Choisissez la langue / Choose language
+          {t('chooseLanguage')}
         </h2>
         <div className='grid grid-cols-2 gap-4'>
           <Button
@@ -55,13 +62,14 @@ const LanguageModal = ({
 };
 
 export default function FIISPage() {
-  const t = useTranslations('HomePage');
   const router = useRouter();
   const searchParams = useSearchParams();
+  const t = useTranslations('FIISPage');
+  const currentLocale = useLocale(); // Déplacer le hook au niveau supérieur
+  const locale = searchParams.get('language') || (currentLocale === 'fr' ? 'FR' : 'EN');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isPDFModalOpen, setIsPDFModalOpen] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState<string | null>(null);
-  const locale = searchParams.get('language') || 'FR';
   const [videoId, setVideoId] = useState('op7QIy61oVI'); // ID de la vidéo YouTube commune pour FR et EN
   const [currentPdfPath, setCurrentPdfPath] = useState('');
   const [pdfTitle, setPdfTitle] = useState('');
@@ -91,11 +99,7 @@ export default function FIISPage() {
           : '/docs/fiis/FR/PACKAGES-FINALE-v3 3.pdf';
 
       setCurrentPdfPath(pdfPath);
-      setPdfTitle(
-        selectedLanguage === 'EN'
-          ? 'FII Senegal Packages'
-          : 'Packages FII Sénégal'
-      );
+      setPdfTitle(t('packagesTitle'));
       setIsPDFModalOpen(true);
     } else {
       setIsModalOpen(true);
@@ -111,11 +115,7 @@ export default function FIISPage() {
           : '/docs/fiis/FR/Plaquette-APIX-FIISEN25-FINAL 2.pdf';
 
       setCurrentPdfPath(pdfPath);
-      setPdfTitle(
-        selectedLanguage === 'EN'
-          ? 'FII Senegal Brochure'
-          : 'Plaquette FII Sénégal'
-      );
+      setPdfTitle(t('brochureTitle'));
       setIsPDFModalOpen(true);
     } else {
       setIsModalOpen(true);
@@ -145,13 +145,13 @@ export default function FIISPage() {
           className='bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg shadow-lg'
           onClick={viewPackages}
         >
-          {selectedLanguage === 'EN' ? 'Packages' : 'Packages'}
+          {t('packages')}
         </Button>
         <Button
           className='bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg shadow-lg'
           onClick={viewBrochure}
         >
-          {selectedLanguage === 'EN' ? 'Brochure' : 'Plaquette'}
+          {t('brochure')}
         </Button>
       </div>
 
