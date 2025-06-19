@@ -12,8 +12,8 @@ import LanguageSwitcher from '@/components/LanguageSwitcher';
 import { Button } from '@/components/ui/button';
 import { TextLoop } from '@/components/ui/text-loop';
 
+import Logo from '~/images/logo_apix_blanc.png';
 import LogoApp from '~/images/logo-white-2.png';
-import Logo from '~/svg/LogoApix.svg';
 
 // !STARTERCONF -> Select !STARTERCONF and CMD + SHIFT + F
 // Before you begin editing, follow all comments with `STARTERCONF`,
@@ -106,7 +106,13 @@ export default function HomePage() {
         </div>
 
         <div className='mt-8 flex flex-col items-center justify-center'>
-          <Logo className='size-48 md:size-64' />
+          <Image
+            src={Logo}
+            alt='logo'
+            width={200}
+            height={200}
+            className='size-48 md:size-64'
+          />
         </div>
       </div>
 
