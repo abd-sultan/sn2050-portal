@@ -1,10 +1,10 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-
-import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useLocale, useTranslations } from 'next-intl';
+import { useEffect, useState } from 'react';
+
+import { cn } from '@/lib/utils';
 
 import PDFModal from '@/components/PDFModal';
 import { Button } from '@/components/ui/button';
@@ -21,7 +21,7 @@ const LanguageModal = ({
 }) => {
   // Les hooks doivent être appelés au niveau supérieur avant toute instruction conditionnelle
   const t = useTranslations('Common');
-  
+
   if (!isOpen) return null;
 
   return (
@@ -66,11 +66,12 @@ export default function FIISPage() {
   const searchParams = useSearchParams();
   const t = useTranslations('FIISPage');
   const currentLocale = useLocale(); // Déplacer le hook au niveau supérieur
-  const locale = searchParams.get('language') || (currentLocale === 'fr' ? 'FR' : 'EN');
+  const locale =
+    searchParams.get('language') || (currentLocale === 'fr' ? 'FR' : 'EN');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isPDFModalOpen, setIsPDFModalOpen] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState<string | null>(null);
-  const [videoId, setVideoId] = useState('op7QIy61oVI'); // ID de la vidéo YouTube commune pour FR et EN
+  const [videoId, setVideoId] = useState('intro.mp4'); // ID de la vidéo YouTube commune pour FR et EN
   const [currentPdfPath, setCurrentPdfPath] = useState('');
   const [pdfTitle, setPdfTitle] = useState('');
 
@@ -79,7 +80,7 @@ export default function FIISPage() {
     const language = searchParams.get('language');
     if (language && ['FR', 'EN'].includes(language)) {
       setSelectedLanguage(language);
-      setVideoId(language === 'EN' ? 'EJnU-E8gE68' : 'op7QIy61oVI');
+      setVideoId(language === 'EN' ? 'intro_en.mp4' : 'intro.mp4');
     }
   }, [searchParams]);
 
@@ -125,17 +126,19 @@ export default function FIISPage() {
   return (
     <div className='relative min-h-screen w-full overflow-hidden bg-black'>
       {/* Vidéo YouTube en arrière-plan */}
-      <div className='absolute top-0 left-0 w-full h-full z-0'>
-        <iframe
-          src={`https://www.youtube.com/embed/${videoId}?autoplay=1&mute=0&controls=0&loop=1&playlist=${videoId}&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&disablekb=1`}
-          className='absolute top-0 left-0 w-full h-full object-cover opacity-60'
-          frameBorder='0'
-          allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
-          allowFullScreen
-          title='Background Video'
-        />
-        <div className='absolute top-0 left-0 w-full h-full bg-black opacity-0'></div>
-      </div>
+      <video
+        className="absolute top-0 left-0 w-full h-full object-cover z-0"
+        src={locale === 'EN' ? '/videos/intro_en.mp4' : '/videos/intro.mp4'}
+        autoPlay
+        loop
+        playsInline
+        preload="auto"
+        // muted={false} // Pour garder le son, mais l'autoplay ne marchera pas partout
+        // controls={false}
+        // poster="/images/video-cover.jpg" // Optionnel, image de fallback
+      >
+        Your browser does not support the video tag.
+      </video>
 
       {/* Overlay pour assombrir un peu la vidéo */}
       {/* <div className='absolute top-0 left-0 w-full h-full bg-white opacity-5 z-10'></div> */}
