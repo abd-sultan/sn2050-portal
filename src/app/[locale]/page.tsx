@@ -99,9 +99,12 @@ export default function HomePage() {
           </Button>
           <Button
             onClick={() => handleDocumentClick('/apix')}
-            className='bg-white/5 hover:bg-black/50 text-white font-bold py-6 text-lg font-exo2 shadow-lg'
+            className='bg-white/5 hover:bg-black/50 text-white font-bold py-6 text-lg font-exo2 shadow-lg flex flex-col items-center justify-center'
           >
             {t('senegalInvestment')}
+            <p className='text-sm text-gray-50 font-light'>
+              ({t('documentToDownload')})
+            </p>
           </Button>
         </div>
 

@@ -8,6 +8,8 @@
     "fiis": "FII Senegal",
     "transformativeProjects": "Transformative Projects",
     "senegalInvestment": "Senegal, the investment hub",
+    "documentToDownload": "Documents to download",
+    "watchVideo": "Watch video",
     "loops": [
       "« Governance and Pan-African engagement »",
       "« Land planning and sustainable development »",
@@ -28,6 +30,8 @@
   "ApixPage": {
     "title": "Senegal, investment crossroads",
     "back": "Back",
+    "film": "The film",
+    "watchVideo": "Watch video",
     "availableDocuments": "Available documents",
     "clickToView": "Click to view",
     "documentViewer": "Document viewer",
@@ -43,7 +47,7 @@
   },
   "FIISPage": {
     "title": "FII Senegal",
-    "subtitle": "Strategic Investment Forum", 
+    "subtitle": "Strategic Investment Forum",
     "packages": "Packages",
     "brochure": "Brochure",
     "packagesTitle": "FII Senegal Packages",

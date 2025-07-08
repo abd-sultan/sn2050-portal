@@ -1,15 +1,14 @@
 'use client';
 
-import { ChevronLeftIcon, FileIcon } from 'lucide-react';
+import { ChevronLeftIcon, FileIcon, VideoIcon } from 'lucide-react';
 import dynamic from 'next/dynamic';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { useLocale } from 'next-intl';
 import { useEffect, useState } from 'react';
 
+import PDFFlipbook from '@/components/PdfFlipbook';
 import { Button } from '@/components/ui/button';
-
-import PDFViewer from '@/app/portal/(account)/components/PDFViewer';
 
 // Import dynamique du DocumentViewer pour éviter les problèmes de SSR
 const DocumentViewer = dynamic(() => import('@/components/DocumentViewer'), {
@@ -152,9 +151,56 @@ export default function ApixPage() {
         {!selectedFile ? (
           // Liste des documents disponibles
           <div>
-            <h2 className='text-xl font-bold mb-6 text-white'>
-              {t('availableDocuments')}
-            </h2>
+            <div className='flex items-center justify-between mb-6'>
+              <h2 className='text-xl font-bold mb-6 text-white'>
+                {t('availableDocuments')}
+              </h2>
+
+              {/* Video fullscreen handler */}
+              <Button
+                onClick={() => {
+                  const video = document.getElementById(
+                    'intro-video-fullscreen'
+                  ) as HTMLVideoElement | null;
+                  if (video) {
+                    video.style.display = 'block';
+                    video.play();
+                    if (video.requestFullscreen) {
+                      video.requestFullscreen();
+                    } else if ((video as any).webkitRequestFullscreen) {
+                      (video as any).webkitRequestFullscreen();
+                    } else if ((video as any).msRequestFullscreen) {
+                      (video as any).msRequestFullscreen();
+                    }
+                  }
+                }}
+                variant='ghost'
+                className='text-gray-300 hover:text-white hover:bg-gray-700'
+              >
+                <VideoIcon size={20} className='mr-1' />
+                {t('watchVideo')}
+              </Button>
+              {/* Hidden video element for fullscreen playback */}
+              <video
+                id='intro-video-fullscreen'
+                src='/videos/the_film.mp4'
+                style={{
+                  display: 'none',
+                  width: '100vw',
+                  height: '100vh',
+                  background: 'black',
+                  zIndex: 9999,
+                }}
+                controls
+                onEnded={(e) => (e.currentTarget.style.display = 'none')}
+                onPause={(e) => {
+                  // Si l'utilisateur quitte le fullscreen, on cache la vidéo
+                  if (!document.fullscreenElement) {
+                    e.currentTarget.style.display = 'none';
+                  }
+                }}
+              />
+            </div>
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
               {documents.map((doc, index) => (
                 <div
@@ -168,9 +214,7 @@ export default function ApixPage() {
                       {doc.displayName}
                     </h3>
                   </div>
-                  <p className='text-gray-400 text-sm'>
-                    {t('clickToView')}
-                  </p>
+                  <p className='text-gray-400 text-sm'>{t('clickToView')}</p>
                 </div>
               ))}
             </div>
@@ -192,13 +236,8 @@ export default function ApixPage() {
               </h2>
             </div>
             <div className='bg-gray-800 p-4 rounded-lg shadow-lg'>
-              {/* <DocumentViewer
-                pdfUrl={selectedFile.path}
-                documentType="apix"
-                documentLanguage={language}
-                fileName={selectedFile.name}
-              /> */}
-              <PDFViewer pdfUrl={selectedFile.path} />
+              {/* <PDFViewer pdfUrl={selectedFile.path} /> */}
+              <PDFFlipbook file={selectedFile.path} />
             </div>
           </div>
         )}
