@@ -1,6 +1,8 @@
 'use client';
 
+import { ArrowRightIcon } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useLocale, useTranslations } from 'next-intl';
 import * as React from 'react';
@@ -107,6 +109,14 @@ export default function HomePage() {
             </p>
           </Button>
         </div>
+
+        {/* Redirect to APIX page */}
+        <Link
+          href='https://fiisenegal.sn/'
+          className='italic text-white font-bold py-6 text-lg font-exo2 underline flex items-center gap-2'
+        >
+          {t('knowMore')} <ArrowRightIcon />
+        </Link>
 
         <div className='mt-8 flex flex-col items-center justify-center'>
           <Image
