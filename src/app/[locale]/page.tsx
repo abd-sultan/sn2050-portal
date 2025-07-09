@@ -86,13 +86,22 @@ export default function HomePage() {
         </div>
 
         {/* Documentation buttons */}
-        <div className='mt-8 grid grid-cols-1 md:grid-cols-3 gap-4 w-full max-w-6xl bg-black/10 backdrop-blur-sm'>
-          <Button
-            onClick={() => handleDocumentClick('/fiis')}
-            className='bg-white/5 hover:bg-black/50 text-white font-bold py-6 text-lg font-exo2 shadow-lg'
-          >
-            {t('fiis')}
-          </Button>
+        <div className='mt-8 grid grid-cols-1 md:grid-cols-3 gap-4 w-full max-w-6xl bg-transparent backdrop-blur-smx'>
+          <div className='flex flex-col items-center justify-center w-full'>
+            <Button
+              onClick={() => handleDocumentClick('/fiis')}
+              className='bg-white/5 hover:bg-black/50 w-full text-white font-bold py-6 text-lg font-exo2 shadow-lg'
+            >
+              {t('fiis')}
+            </Button>
+            <Link
+              href='https://fiisenegal.sn/'
+              className='italic text-white text-center font-bold py-6 text-lg font-exo2 underline flex items-center gap-2'
+            >
+              {t('knowMore')} <ArrowRightIcon />
+            </Link>
+          </div>
+
           <Button
             onClick={() => handleDocumentClick('/projets')}
             className='bg-white/5 hover:bg-black/50 text-white font-bold py-6 text-lg font-exo2 shadow-lg'
@@ -109,14 +118,6 @@ export default function HomePage() {
             </p>
           </Button>
         </div>
-
-        {/* Redirect to APIX page */}
-        <Link
-          href='https://fiisenegal.sn/'
-          className='italic text-white font-bold py-6 text-lg font-exo2 underline flex items-center gap-2'
-        >
-          {t('knowMore')} <ArrowRightIcon />
-        </Link>
 
         <div className='mt-8 flex flex-col items-center justify-center'>
           <Image
