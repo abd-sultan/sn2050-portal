@@ -235,7 +235,7 @@ export default function ApixPage() {
                 {selectedFile.displayName}
               </h2>
             </div>
-            <div className='bg-gray-800 p-4 rounded-lg shadow-lg'>
+            <div className='bg-gray-800 p-2 sm:p-4 rounded-lg shadow-lg overflow-x-auto' style={{ maxWidth: '100vw' }}>
               {/* <PDFViewer pdfUrl={selectedFile.path} /> */}
               <PDFFlipbook file={selectedFile.path} />
             </div>

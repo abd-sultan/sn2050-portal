@@ -48,34 +48,34 @@ export default function HomePage() {
   };
 
   return (
-    <main className='flex h-screen w-full overflow-hidden flex-col items-center justify-center bg-[url(/images/bg.jpg)] bg-cover bg-center bg-no-repeat gap-8 p-0'>
+    <main className='flex min-h-screen w-full flex-col items-center justify-center bg-[url(/images/bg.jpg)] bg-cover bg-center bg-no-repeat gap-6 p-2 sm:gap-8 sm:p-4 md:p-8 overflow-x-hidden'>
       {/* image background */}
       <div className='absolute top-0 left-0 w-full h-full bg-cover bg-black/10 bg-center opacity-5 z-0' />
 
       {/* Language switcher */}
       <LanguageSwitcher />
 
-      <div className='z-10 flex flex-col items-center justify-center gap-8 px-4 text-center'>
+      <div className='z-10 flex flex-col items-center justify-center gap-6 px-2 sm:gap-8 sm:px-4 text-center w-full max-w-3xl'>
         <Image
           width={500}
           height={300}
           src={LogoApp}
           alt='logo'
-          className='w-full max-w-[500px] h-auto'
+          className='w-4/5 max-w-xs sm:max-w-md md:max-w-lg lg:max-w-xl h-auto mx-auto drop-shadow-md'
         />
 
-        <h1 className='text-2xl md:text-4xl font-bold text-white font-exo2'>
+        <h1 className='text-xl sm:text-2xl md:text-4xl font-bold text-white font-exo2 leading-tight'>
           {t('title')}
         </h1>
 
-        <p className='text-lg md:text-2xl font-semibold text-white font-exo2'>
+        <p className='text-base sm:text-lg md:text-2xl font-semibold text-white font-exo2'>
           {t('subtitle')}
         </p>
 
-        <div className='min-h-[60px] md:min-h-[80px] flex items-center justify-center'>
+        <div className='min-h-[48px] sm:min-h-[60px] md:min-h-[80px] flex items-center justify-center w-full'>
           <TextLoop
             interval={3}
-            className='text-xl md:text-3xl font-bold text-white font-exo2 text-center px-4 py-2 rounded-lg bg-black/10 backdrop-blur-sm'
+            className='text-base sm:text-xl md:text-3xl font-bold text-white font-exo2 text-center px-2 sm:px-4 py-2 rounded-lg bg-black/10 backdrop-blur-sm w-full'
           >
             {loopTexts.map((text: string, index: number) => (
               <span key={index} className='block'>
@@ -86,17 +86,17 @@ export default function HomePage() {
         </div>
 
         {/* Documentation buttons */}
-        <div className='mt-8 grid grid-cols-1 md:grid-cols-3 gap-4 w-full max-w-6xl bg-transparent backdrop-blur-smx'>
-          <div className='flex flex-col items-center justify-center w-full'>
+        <div className='mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 w-full max-w-4xl bg-transparent'>
+          <div className='flex flex-col items-center justify-center w-full gap-2'>
             <Button
               onClick={() => handleDocumentClick('/fiis')}
-              className='bg-white/5 hover:bg-black/50 w-full text-white font-bold py-6 text-lg font-exo2 shadow-lg'
+              className='bg-white/5 hover:bg-black/50 w-full text-white font-bold py-4 sm:py-6 text-base sm:text-lg font-exo2 shadow-lg rounded-md transition-all duration-200'
             >
               {t('fiis')}
             </Button>
             <Link
               href='https://fiisenegal.sn/'
-              className='italic text-white text-center font-bold py-6 text-lg font-exo2 underline flex items-center gap-2'
+              className='italic text-white text-center font-bold py-4 sm:py-6 text-base sm:text-lg font-exo2 underline flex items-center gap-2'
             >
               {t('knowMore')} <ArrowRightIcon />
             </Link>
@@ -104,28 +104,31 @@ export default function HomePage() {
 
           <Button
             onClick={() => handleDocumentClick('/projets')}
-            className='bg-white/5 hover:bg-black/50 text-white font-bold py-6 text-lg font-exo2 shadow-lg'
+            className='bg-white/5 hover:bg-black/50 w-full text-white font-bold py-4 sm:py-6 text-base sm:text-lg font-exo2 shadow-lg rounded-md transition-all duration-200'
           >
             {t('transformativeProjects')}
           </Button>
           <Button
             onClick={() => handleDocumentClick('/apix')}
-            className='bg-white/5 hover:bg-black/50 text-white font-bold py-6 text-lg font-exo2 shadow-lg flex flex-col items-center justify-center'
+            className='bg-white/5 hover:bg-black/50 w-full text-white font-bold py-4 sm:py-6 text-base sm:text-lg font-exo2 shadow-lg flex flex-col items-center justify-center rounded-md transition-all duration-200 break-words whitespace-normal min-w-0 max-w-full text-center'
+            style={{ wordBreak: 'break-word', hyphens: 'auto' }}
           >
-            {t('senegalInvestment')}
-            <p className='text-sm text-gray-50 font-light'>
+            <span className='block w-full break-words whitespace-normal text-center'>
+              {t('senegalInvestment')}
+            </span>
+            <p className='text-sm text-gray-50 font-light break-words whitespace-normal w-full text-center'>
               ({t('documentToDownload')})
             </p>
           </Button>
         </div>
 
-        <div className='mt-8 flex flex-col items-center justify-center'>
+        <div className='mt-6 flex flex-col items-center justify-center'>
           <Image
             src={Logo}
             alt='logo'
             width={200}
             height={200}
-            className='size-48 md:size-64'
+            className='w-32 h-32 sm:w-48 sm:h-48 md:w-64 md:h-64 object-contain drop-shadow-lg'
           />
         </div>
       </div>

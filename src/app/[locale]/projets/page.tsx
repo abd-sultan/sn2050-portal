@@ -3,25 +3,13 @@
 import { useEffect, useRef, useState } from 'react';
 
 import { ChevronLeftIcon } from 'lucide-react';
-import dynamic from 'next/dynamic';
+
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
 
-// Import dynamique du PDFViewer pour éviter les problèmes de SSR
-const PDFViewer = dynamic(
-  () => import('@/app/portal/(account)/components/PDFViewer'),
-  {
-    ssr: false,
-    loading: () => (
-      <div className="flex items-center justify-center h-[80vh]">
-        <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-        <p className="ml-3 text-white">Chargement du document...</p>
-      </div>
-    ),
-  }
-);
+import PdfFlipbook from '@/components/PdfFlipbook';
 
 export default function ProjetsPage() {
   const t = useTranslations('ProjetsPage');
@@ -30,8 +18,8 @@ export default function ProjetsPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [pdfPath, setPdfPath] = useState('/docs/projets/FR/document.pdf');
   const [windowReady, setWindowReady] = useState(false);
-  const [scale, setScale] = useState(1.0);
-  const pdfContainerRef = useRef<HTMLDivElement>(null);
+
+
 
   // Vérification que le composant est rendu côté client et gestion du paramètre de langue
   useEffect(() => {
@@ -51,31 +39,7 @@ export default function ProjetsPage() {
     return () => clearTimeout(timer);
   }, [searchParams]);
 
-  // Calcul de l'echelle optimale pour le PDF
-  useEffect(() => {
-    if (!isLoading && pdfContainerRef.current) {
-      const calculateOptimalScale = () => {
-        const containerHeight = pdfContainerRef.current?.clientHeight || 0;
-        const containerWidth = pdfContainerRef.current?.clientWidth || 0;
-        
-        // Calcule l'echelle en fonction des dimensions disponibles
-        // On ajuste avec un facteur de 0.9 pour laisser de l'espace autour
-        const heightScale = containerHeight / 950 * 0.9;
-        const widthScale = containerWidth / 700 * 0.9;
-        
-        // On prend l'echelle la plus petite pour s'assurer que tout est visible
-        const optimalScale = Math.min(heightScale, widthScale, 1.5);
-        setScale(optimalScale);
-      };
-      
-      calculateOptimalScale();
-      window.addEventListener('resize', calculateOptimalScale);
-      
-      return () => {
-        window.removeEventListener('resize', calculateOptimalScale);
-      };
-    }
-  }, [isLoading, windowReady]);
+
 
   if (!windowReady || isLoading) {
     return (
@@ -110,10 +74,9 @@ export default function ProjetsPage() {
       {/* Conteneur du visualiseur PDF en plein écran */}
       <div 
         className="flex-grow w-full flex items-center justify-center p-4 bg-gray-900" 
-        ref={pdfContainerRef}
       >
         <div className="w-full h-full flex justify-center items-center">
-          <PDFViewer pdfUrl={pdfPath} scale={scale} />
+          <PdfFlipbook file={pdfPath} />
         </div>
       </div>
     </div>

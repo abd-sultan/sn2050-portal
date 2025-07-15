@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 
 import { cn } from '@/lib/utils';
 
-import PDFModal from '@/components/PDFModal';
+import PdfFlipbook from '@/components/PdfFlipbook';
 import { Button } from '@/components/ui/button';
 
 // Modèle pour la modal de langue
@@ -143,15 +143,15 @@ export default function FIISPage() {
       {/* Overlay pour assombrir un peu la vidéo */}
       {/* <div className='absolute top-0 left-0 w-full h-full bg-white opacity-5 z-10'></div> */}
 
-      <div className='absolute bottom-10 left-1/2 transform -translate-x-1/2 z-20 flex flex-row items-center gap-4'>
+      <div className='absolute bottom-4 sm:bottom-8 md:bottom-10 left-1/2 transform -translate-x-1/2 z-20 flex flex-col sm:flex-row items-center gap-3 sm:gap-4 w-full px-2 sm:px-0 max-w-xl'>
         <Button
-          className='bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg shadow-lg'
+          className='bg-blue-600 hover:bg-blue-700 text-white w-full sm:w-auto px-4 py-2 sm:px-6 sm:py-3 rounded-lg shadow-lg text-base sm:text-lg font-semibold transition-all duration-200'
           onClick={viewPackages}
         >
           {t('packages')}
         </Button>
         <Button
-          className='bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg shadow-lg'
+          className='bg-blue-600 hover:bg-blue-700 text-white w-full sm:w-auto px-4 py-2 sm:px-6 sm:py-3 rounded-lg shadow-lg text-base sm:text-lg font-semibold transition-all duration-200 mt-2 sm:mt-0'
           onClick={viewBrochure}
         >
           {t('brochure')}
@@ -166,12 +166,23 @@ export default function FIISPage() {
       />
 
       {/* Modal pour afficher les PDF */}
-      <PDFModal
-        isOpen={isPDFModalOpen}
-        onClose={() => setIsPDFModalOpen(false)}
-        pdfPath={currentPdfPath}
-        title={pdfTitle}
-      />
+      {isPDFModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
+          <div className="relative bg-gray-900 rounded-lg shadow-lg max-w-3xl w-full mx-2 p-4 flex flex-col items-center">
+            <button
+              className="absolute top-2 right-2 text-gray-400 hover:text-white text-2xl font-bold"
+              onClick={() => setIsPDFModalOpen(false)}
+              aria-label="Fermer"
+            >
+              ×
+            </button>
+            <h2 className="text-lg font-bold text-white mb-4">{pdfTitle}</h2>
+            <div className="w-full flex justify-center items-center">
+              <PdfFlipbook file={currentPdfPath} />
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
