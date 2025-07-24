@@ -1,8 +1,6 @@
 'use client';
 
-import { ArrowRightIcon } from 'lucide-react';
 import Image from 'next/image';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useLocale, useTranslations } from 'next-intl';
 import * as React from 'react';
@@ -89,17 +87,11 @@ export default function HomePage() {
         <div className='mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 w-full max-w-4xl bg-transparent'>
           <div className='flex flex-col items-center justify-center w-full gap-2'>
             <Button
-              onClick={() => handleDocumentClick('/fiis')}
+              onClick={() => router.push('https://fiisenegal.sn/')}
               className='bg-white/5 hover:bg-black/50 w-full text-white font-bold py-4 sm:py-6 text-base sm:text-lg font-exo2 shadow-lg rounded-md transition-all duration-200'
             >
               {t('fiis')}
             </Button>
-            <Link
-              href='https://fiisenegal.sn/'
-              className='italic text-white text-center font-bold py-4 sm:py-6 text-base sm:text-lg font-exo2 underline flex items-center gap-2'
-            >
-              {t('knowMore')} <ArrowRightIcon />
-            </Link>
           </div>
 
           <Button
